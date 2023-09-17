@@ -36,13 +36,13 @@ img {
 }
 
 .fa {
-    padding: 20px;
-    font-size: 30px;
-    width: 80px;
+    padding: 10px;
+    font-size: 20px;
+    width: 45px;
     height: max-content;
     text-align: center;
     text-decoration: none;
-    margin: 5px 2px;
+    margin: 2px 0px;
     background-image: linear-gradient(to bottom, rgb(250, 179, 206), #b269f7, #ad5cf8, #921eff, #6003b1);
     ;
     color: white;
@@ -60,7 +60,7 @@ button:hover {
     float: left;
     width: 40%;
     padding: 10px;
-    height: 300px;
+    height: max-content;
     margin-left: 2%;
     margin-right: 2%;
 }
