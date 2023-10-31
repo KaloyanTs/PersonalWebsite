@@ -1,7 +1,7 @@
 import useWeb3Forms from '@web3forms/react';
 
 // Add inside your function
-const accessKey = 'YOUR_ACCESS_KEY_HERE';
+const accessKey = '22f1cfb2-0e7a-478f-9db4-bccd0e0265a4';
 const { submit } = useWeb3Forms({
   access_key: accessKey,
   settings: {
