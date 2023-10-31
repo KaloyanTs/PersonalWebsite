@@ -12,7 +12,7 @@
 
 <body>
 
-    <script src="script.js"></script>
+
 
     <h1>In progress...</h1>
 
@@ -24,20 +24,25 @@
                     style="margin: auto;">DS
                     Notes</button>
             </div>
-            <!-- <div style="display: flex;
+            <div style="display: flex;
             justify-content: space-between;align-items: center;margin-top: 10px; margin-bottom: 10px;">
                 <button onclick="window.location.href='src/other/DND-installer.exe'" type="button"
                     style="margin: auto;">D&D game</button>
-            </div> -->
-            <button onClick="{ (e)=> {
-                submit({
-                name: 'John',
-                email: 'john@email.com',
-                message: 'Message Content',
-                });
-                } } ">
-                Submit form
-            </button>
+            </div>
+            <form action="https://api.web3forms.com/submit" method="POST">
+
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+                <input type="text" name="name" required>
+                <input type="email" name="email" required>
+                <textarea name="message" required></textarea>
+                <div class="h-captcha" data-captcha="true"></div>
+                <button type="submit">Submit Form</button>
+
+            </form>
+
+            <script src="https://web3forms.com/client/script.js" async defer></script>
+            <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
         </div>
     </div>
     <div class="column">
