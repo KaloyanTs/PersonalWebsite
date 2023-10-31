@@ -29,14 +29,15 @@
                 <button onclick="window.location.href='src/other/DND-installer.exe'" type="button"
                     style="margin: auto;">D&D game</button>
             </div>
-            <form action="https://api.web3forms.com/submit" method="POST">
+            <form style="align-items: center;" action="https://api.web3forms.com/submit" method="POST">
 
                 <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
 
-                <input type="text" name="name" required>
-                <input type="email" name="email" required>
-                <textarea name="message" required></textarea>
-                <button type="submit">Submit Form</button>
+                <label for="fname">Name:</label>
+                <br><input style="width: 50%;" type="text" name="name" required>
+                <br><label for="fname">Suggestions, problems, thoughts...</label>
+                <br><textarea style="width: 50%;" name="message" required></textarea>
+                <button style="width: 50%;" type="submit">Send to me</button>
 
             </form>
 
