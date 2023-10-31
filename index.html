@@ -12,6 +12,8 @@
 
 <body>
 
+    <script src="script.js"></script>
+
     <h1>In progress...</h1>
 
     <div class="row">
@@ -22,11 +24,20 @@
                     style="margin: auto;">DS
                     Notes</button>
             </div>
-            <div style="display: flex;
+            <!-- <div style="display: flex;
             justify-content: space-between;align-items: center;margin-top: 10px; margin-bottom: 10px;">
                 <button onclick="window.location.href='src/other/DND-installer.exe'" type="button"
                     style="margin: auto;">D&D game</button>
-            </div>
+            </div> -->
+            <button onClick="{ (e)=> {
+                submit({
+                name: 'John',
+                email: 'john@email.com',
+                message: 'Message Content',
+                });
+                } } ">
+                Submit form
+            </button>
         </div>
     </div>
     <div class="column">
