@@ -12,14 +12,12 @@
 
 <body>
 
-
-
     <h1>In progress...</h1>
 
     <div class="row">
         <div class="column">
             <div style="display: flex;
-            justify-content: space-between;align-items: center;margin-top: 10px; margin-bottom: 10px;">
+            justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
                 <button onclick="window.location.href='src/documents/readyNotes_part1.pdf'" type="button"
                     style="margin: auto;">DS
                     Notes</button>
@@ -29,17 +27,29 @@
                 <button onclick="window.location.href='src/other/DND-installer.exe'" type="button"
                     style="margin: auto;">D&D game</button>
             </div> -->
+            <div class = "box">
             <form style="align-items: center;" action="https://api.web3forms.com/submit" method="POST">
 
                 <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
 
-                <label for="fname">Name:</label>
-                <br><input style="width: 50%;" type="text" name="name" required>
-                <br><label for="fname">Suggestions, problems, thoughts...</label>
-                <br><textarea style="width: 50%;" name="message" placeholder="For example, found a typo on page 14..." required></textarea>
-                <br><button style="width: 50%;" type="submit">Send to me</button>
+                <p style="text-align: center;margin-top: 0;" for="fname">Name:</p>
+                <br><input style="padding: 6;margin-bottom: 20px; width: 100%;" type="text" name="name" required>
+
+                <br><p style="text-align: center; line-height: normal;" for="fname">Corrections and suggestions...</p>
+
+                <br><textarea style="width: 100%;" name="message" placeholder="For example, found a typo on page 14..." required></textarea>
+
+                <br>
+
+                <br><div style="display: flex;
+                justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
+                    <button style="display: flex;
+                    justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;width: 50%;margin: auto;" type="submit">Send to me</button>
+                </div>
+
                 <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
             </form>
+            </div>
                 <!-- todo make new email for the purpose -->
             <script src="https://web3forms.com/client/script.js" async defer></script>
         </div>
