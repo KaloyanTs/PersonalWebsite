@@ -16,41 +16,45 @@
 
     <div class="row">
         <div class="column">
-            <div style="display: flex;
-            justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
-                <button onclick="window.location.href='src/documents/readyNotes_part2.pdf'" type="button"
-                    style="margin: auto;">DS
+            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px; ">
+                <button class="resourceBtn" onclick="window.location.href='src/documents/readyNotes_part2.pdf'"
+                    type="button" style="margin: auto;">DS
                     Notes</button>
             </div>
-            <!-- <div style="display: flex;
-            justify-content: space-between;align-items: center;margin-top: 10px; margin-bottom: 10px;">
-                <button onclick="window.location.href='src/other/DND-installer.exe'" type="button"
-                    style="margin: auto;">D&D game</button>
-            </div> -->
-            <div class = "box">
-            <form style="align-items: center;" action="https://api.web3forms.com/submit" method="POST">
-
-                <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
-
-                <p style="text-align: center;margin-top: 0;" for="fname">Name:</p>
-                <br><input style="padding: 6;margin-bottom: 20px; width: 100%;" type="text" name="name" required>
-
-                <br><p style="text-align: center; line-height: normal;" for="fname">Corrections and suggestions...</p>
-
-                <br><textarea style="width: 100%;" name="message" placeholder="For example, found a typo on page 14..." required></textarea>
-
-                <br>
-
-                <br><div style="display: flex;
-                justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
-                    <button style="display: flex;
-                    justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;width: 50%;margin: auto;" type="submit">Send to me</button>
-                </div>
-
-                <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
-            </form>
+            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px;">
+                <button class="resourceBtn" onclick="window.location.href='src/other/DAA_notes.pdf'" type="button"
+                    style="margin: auto;">DAA Notes</button>
             </div>
-                <!-- todo make new email for the purpose -->
+
+            <div style="margin:auto; margin-top: 50px; width: 75%;" class="box">
+                <form style="align-items: center;" action="https://api.web3forms.com/submit" method="POST">
+
+                    <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
+
+                    <p style="text-align: center;margin-top: 0; margin-bottom: 0px;" for="fname">Name:</p>
+                    <br><input style="padding: 6;margin-bottom: 20px; width: 100%; max-width: 100%;" type="text"
+                        name="name" required>
+
+                    <br>
+                    <p style="text-align: center; line-height: normal;" for="fname">Suggestions, corrections and
+                        opinions...</p>
+
+                    <br><textarea style="width: 100%; max-width: 100%;" name="message" placeholder="..."
+                        required></textarea>
+
+                    <br>
+
+                    <br>
+                    <div style="display: flex;
+                justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
+                        <button style=" margin-top: 10px; margin-bottom: 10px;width: 50%;margin: auto; font-size: 30px;"
+                            type="submit">Send to me</button>
+                    </div>
+
+                    <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
+                </form>
+            </div>
+            <!-- todo make new email for the purpose -->
             <script src="https://web3forms.com/client/script.js" async defer></script>
         </div>
     </div>
@@ -71,6 +75,7 @@
         <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
     </div>
 
+    <script src="script/indexScript.js"></script>
 </body>
 
 
