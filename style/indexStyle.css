@@ -1,6 +1,8 @@
 body {
-    background-image: linear-gradient(to bottom, #1e0237, #380b63, #561394, #751cc7, #9626fd);
+    background-image: linear-gradient(to bottom, #1e0237, #6a468d, #9872bd, #ab80d3, #dec2f7);
     margin-top: 1cm;
+    transition: 0.3s
+    ;
 }
 
 label {
@@ -21,7 +23,7 @@ p {
     font-style: normal;
     font-variant: normal;
     font-weight: 700;
-    color: rgb(250, 179, 206);
+    color: #086466;
     line-height: 40px;
 }
 
@@ -32,7 +34,7 @@ h1 {
     font-variant: normal;
     font-weight: 700;
     line-height: 26.4px;
-    color: rgb(250, 179, 206);
+    color: #086466;
     display: block;
     text-align: center;
 }
@@ -50,6 +52,7 @@ button {
     background-image: linear-gradient(to bottom, rgb(250, 179, 206), #b269f7, #ad5cf8, #921eff, #6003b1);
     ;
     margin: 12px;
+    color: #086466
 }
 
 img {
@@ -88,7 +91,7 @@ button:hover {
 }
 
 .box {
-    border: 5px solid pink;
+    border: 5px solid #086466;
     padding: 10px;
     border-radius: 10px;
 
@@ -101,4 +104,5 @@ textarea:hover::-webkit-input-placeholder {
 
 .resourceBtn{
     visibility: hidden;
+    color:rgb(250, 179, 206);
 }
