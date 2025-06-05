@@ -1,89 +1,666 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&family=Rubik+Wet+Paint&display=swap"
-        rel="stylesheet">
-    <link rel="icon" href="src/images/icon_bulb.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style/indexStyle.css">
-    <meta name="viewport">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Personal Website</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome CDN for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-+hAcH1fF+tYp2d2ObFxSk0XkcRj2E0Nq+kV1UdbmRQ1g8Dpq6nd4bTUW5lxRvmtEAVyozqPcCjV9QzDhdg0kfw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
+    <style>
+        /* Global Styles */
+        :root {
+            --color-black: #000000;
+            --color-white: #ffffff;
+            --color-pink: #FFB6C1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--color-white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--color-pink);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--color-black);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-pink);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav li a {
+            font-weight: 700;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: var(--color-black);
+            padding-top: 4rem;
+            /* account for fixed header */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--color-pink);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .hero h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s;
+        }
+
+        .hero p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--color-pink);
+            border-radius: 25px;
+            color: var(--color-pink);
+            font-weight: 700;
+            transition: background-color 0.3s, color 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out 0.6s, transform 0.6s ease-out 0.6s;
+        }
+
+        .btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn:hover {
+            background-color: var(--color-pink);
+            color: var(--color-black);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 2rem 2rem;
+            margin-left: 0;
+            color: var(--color-pink);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: var(--color-pink);
+            display: block;
+            margin: 0.5rem auto 0;
+        }
+
+        /* Fade-in Utility */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Light & Dark Sections */
+        .light-section {
+            background-color: var(--color-white);
+            color: var(--color-black);
+        }
+
+        .dark-section {
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+
+        /* About Section */
+        #about {
+            background-color: var(--color-white);
+            color: var(--color-black);
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about-content p {
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .about-images {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .about-images img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--color-pink);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .about-images img.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video Section */
+        .video-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 4rem 0;
+        }
+
+        .video-section iframe {
+            width: 80%;
+            max-width: 800px;
+            height: 450px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Math Competitions Section */
+        #math {
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .math-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .math-item {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .math-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .math-item h3 {
+            margin-bottom: 1rem;
+            color: rgb(215, 73, 199);
+        }
+
+        /* Course Notes Section */
+        #notes {
+            background-color: var(--color-white);
+            color: var(--color-black);
+        }
+
+        .notes-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .note-item {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            transition: border-color 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s;
+        }
+
+        .note-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .note-item:hover {
+            border-color: var(--color-pink);
+            transform: scale(1.02);
+        }
+
+        .note-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--color-black);
+        }
+
+        .note-item a {
+            color: var(--color-pink);
+            font-weight: 700;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #111;
+            color: var(--color-white);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--color-pink);
+        }
+
+        .contact-form button {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--color-pink);
+            color: var(--color-black);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #ff9fb1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-black);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #333;
+        }
+
+        footer p {
+            color: #666666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .video-section iframe {
+                width: 100%;
+                height: auto;
+            }
+
+            .about-images {
+                flex-direction: column;
+            }
+
+            .about-images img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
-    <h1>In progress...</h1>
-
-    <div class="row">
-        <div class="column">
-            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px; ">
-                <button class="resourceBtn" onclick="window.location.href='src/documents/DS_notes.pdf'" type="button"
-                    style="margin: auto;">DS
-                    Notes</button>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">Kaloyan</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#notes">Notes</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="social-icons">
+                <!-- Replace href="#" with your actual social links -->
+                <a href="https://www.facebook.com/profile.php?id=100024007178107" target="_blank" rel="noopener"><i
+                        class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/kaloyants_gotin_sym/" target="_blank" rel="noopener"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/" target="_blank" rel="noopener"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/KaloyanTs" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
             </div>
-            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px;">
-                <button class="resourceBtn" onclick="window.location.href='src/documents/DAA_notes.pdf'" type="button"
-                    style="margin: auto;">DAA Notes</button>
-            </div>
-            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px;">
-                <button class="resourceBtn" onclick="window.location.href='src/documents/Algebra_notes.pdf'" type="button"
-                    style="margin: auto;">Algebra Notes</button>
-            </div>
-
-            <div style="margin:auto; margin-top: 50px; width: 75%;" class="box">
-                <form id="submitForm" novalidate="novalidate" style="align-items: center;"
-                    action="https://api.web3forms.com/submit" method="POST">
-
-                    <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
-
-                    <p style="text-align: center;margin-top: 0; margin-bottom: 0px;" for="fname">Name:</p>
-                    <br><input style="padding: 6;margin-bottom: 20px; width: 100%; max-width: 100%;" type="text"
-                        name="name" placeholder="Your (nick)name here..." required>
-
-                    <br>
-                    <p style="text-align: center; line-height: normal;" for="fname">Suggestions, corrections and
-                        opinions...</p>
-
-                    <br><textarea id="textArea" style="width: 100%; max-width: 100%;" name="message" placeholder="..."
-                        required></textarea>
-
-                    <br>
-
-                    <br>
-                    <div style="display: flex;
-                justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
-                        <button id="submitButton"
-                            style=" margin-top: 10px; margin-bottom: 10px;width: 50%;margin: auto; font-size: 30px; "
-                            type="submit">Send to me</button>
-                    </div>
-
-                    <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
-                </form>
-            </div>
-            <!-- todo make new email for the purpose -->
-            <script src="https://web3forms.com/client/script.js" async defer></script>
         </div>
-    </div>
-    <div class="column">
-        <img src="src/images/me.webp" alt="This had to be me..." s tyle="width: 50%; margin: 0 auto; display: flex;">
-    </div>
-    </div>
-    <div style="position: absolute; top: 5px;
-    right: 5px;
-            justify-content: space-between;">
-        <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'"
-            class="fa fa-facebook">
-        </button>
-        <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'"
-            class="fa fa-instagram"></button>
-        <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'"
-            class="fa fa-linkedin"></button>
-        <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
-    </div>
+    </header>
 
-    <script src="script/indexScript.js"></script>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1 class="hero-title">Welcome to My Personal Site</h1>
+        <p class="hero-desc">I’m a Computer Science undergraduate with a passion for math</p>
+        <a href="#about" class="btn hero-btn">Learn More</a>
+        <div class="about-images">
+            <!-- Replace src with your actual image URLs -->
+            <img src="src/images/profile.webp" alt="Picture of Me" class="fade-in">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="light-section">
+        <div class="container section-content">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content fade-in">
+                <p>Hello! I’m a CS final year undergrad. This website serves as my personal portfolio and a place to
+                    share my experience, projects and ideas. The page is still under construction, so please bear with
+                    me.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <!-- <div class="video-section">
+        <iframe src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=0&controls=0&loop=1&playlist=9bZkp7q19f0"
+            allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
+    </div> -->
+
+    <section id="background" class="dark-section">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="math-container">
+                <div class="math-item">
+                    <h3>Teaching assisstant</h3>
+                    <p>Years: 2022 - present</p>
+                    <p>Details: Giving exercises to undergrads in several courses</p>
+                </div>
+                <div class="math-item">
+                    <h3>INSAIT Research Internship</h3>
+                    <p>Period: March 2025 - June 2025</p>
+                    <p>Subjects: AI Safety/LRM Scheming, Theory</p>
+                </div>
+                <div class="math-item">
+                    <h3>Astea Solutions Full-Stack Internship</h3>
+                    <p>Period: July 2024 - November 2024</p>
+                    <p>Details: Building Web based team project</p>
+                </div>
+                <div class="math-item">
+                    <h3>FMI Codes</h3>
+                    <p>Achievement: Second place (2023), First place (2024)</p>
+                    <p>Details: University hackaton for building 48-hour project</p>
+                </div>
+                <div class="math-item">
+                    <h3>National Undergrauate Math Olympiad</h3>
+                    <p>Achievement: 1xSecond (2024), 2xBronze (2023,2025)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <!-- <div class="video-section"></div>
+    <iframe src="https://www.youtube.com/embed/LsoLEjrDogU?autoplay=0&controls=0&loop=1&playlist=LsoLEjrDogU&mute=1"
+        allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
+    </div> -->
+
+    <section id="notes" class="light-section">
+        <div class="container">
+            <h2 class="section-title">Course Notes</h2>
+            <div class="notes-container">
+                <div class="note-item">
+                    <h4>Discrete Mathematics</h4>
+                    <p><a href="./src/documents/DS_notes.pdf">Open Notes (PDF)</a></p>
+                </div>
+                <div class="note-item">
+                    <h4>Design and Analysis of Algorithms</h4>
+                    <p><a href="./src/documents/DAA_notes.pdf">Open Notes (PDF)</a></p>
+                </div>
+                <div class="note-item">
+                    <h4>Algebra</h4>
+                    <p><a href="./src/documents/Algebra_notes.pdf">Open Notes (PDF)</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <!-- <div class="video-section">
+        <iframe src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=0&controls=0&loop=1&playlist=5qap5aO4i9A"
+            allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
+    </div> -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="dark-section">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-container fade-in">
+                <form class="contact-form" id="contact-form" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+
+                <script>
+                    document.getElementById('contact-form').addEventListener('submit', function (ev) {
+                        ev.preventDefault(); // prevent normal navigation
+
+                        const form = ev.target;
+                        const formData = new FormData(form);
+
+                        fetch('./messages.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => {
+                                if (!response.ok) throw new Error('Network error');
+                                return response.text();
+                            })
+                            .then(text => {
+                                // You can show a “Thank you” message here instead of opening messages.php
+                                alert('Message sent successfully!');
+                                form.reset();
+                            })
+                            .catch(err => {
+                                alert(error);
+                            });
+                    });
+                </script>
+
+                <div id="formStatus" style="margin-top: 1rem; text-align: center;"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function validateForm() {
+            document.getElementById('formStatus').innerHTML = "Sending message...";
+            return true;
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2025 Kaloyan Tsvetkov. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.2
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe hero elements
+            const heroTitle = document.querySelector('.hero-title');
+            const heroDesc = document.querySelector('.hero-desc');
+            const heroBtn = document.querySelector('.hero-btn');
+            [heroTitle, heroDesc, heroBtn].forEach(el => observer.observe(el));
+
+            // Observe section titles
+            document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
+
+            // Observe fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // Observe math items
+            document.querySelectorAll('.math-item').forEach(el => observer.observe(el));
+
+            // Observe note items
+            document.querySelectorAll('.note-item').forEach(el => observer.observe(el));
+
+            // Observe about images
+            document.querySelectorAll('.about-images img').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
-
 
 </html>

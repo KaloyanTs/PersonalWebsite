@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&family=Rubik+Wet+Paint&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="src/images/icon_bulb.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style/indexStyle.css">
+    <meta name="viewport">
+</head>
+
+<body>
+
+    <h1>In progress...</h1>
+
+    <div class="row">
+        <div class="column">
+            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px; ">
+                <button class="resourceBtn" onclick="window.location.href='src/documents/DS_notes.pdf'" type="button"
+                    style="margin: auto;">DS
+                    Notes</button>
+            </div>
+            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px;">
+                <button class="resourceBtn" onclick="window.location.href='src/documents/DAA_notes.pdf'" type="button"
+                    style="margin: auto;">DAA Notes</button>
+            </div>
+            <div style="margin: 0 auto; display: flex; margin-top: 10px; margin-bottom: 20px;">
+                <button class="resourceBtn" onclick="window.location.href='src/documents/Algebra_notes.pdf'" type="button"
+                    style="margin: auto;">Algebra Notes</button>
+            </div>
+
+            <div style="margin:auto; margin-top: 50px; width: 75%;" class="box">
+                <form id="submitForm" novalidate="novalidate" style="align-items: center;"
+                    action="https://api.web3forms.com/submit" method="POST">
+
+                    <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
+
+                    <p style="text-align: center;margin-top: 0; margin-bottom: 0px;" for="fname">Name:</p>
+                    <br><input style="padding: 6;margin-bottom: 20px; width: 100%; max-width: 100%;" type="text"
+                        name="name" placeholder="Your (nick)name here..." required>
+
+                    <br>
+                    <p style="text-align: center; line-height: normal;" for="fname">Suggestions, corrections and
+                        opinions...</p>
+
+                    <br><textarea id="textArea" style="width: 100%; max-width: 100%;" name="message" placeholder="..."
+                        required></textarea>
+
+                    <br>
+
+                    <br>
+                    <div style="display: flex;
+                justify-content: space-between; align-items: baseline; margin-top: 10px; margin-bottom: 10px;">
+                        <button id="submitButton"
+                            style=" margin-top: 10px; margin-bottom: 10px;width: 50%;margin: auto; font-size: 30px; "
+                            type="submit">Send to me</button>
+                    </div>
+
+                    <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
+                </form>
+            </div>
+            <!-- todo make new email for the purpose -->
+            <script src="https://web3forms.com/client/script.js" async defer></script>
+        </div>
+    </div>
+    <div class="column">
+        <img src="src/images/me.webp" alt="This had to be me..." s tyle="width: 50%; margin: 0 auto; display: flex;">
+    </div>
+    </div>
+    <div style="position: absolute; top: 5px;
+    right: 5px;
+            justify-content: space-between;">
+        <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'"
+            class="fa fa-facebook">
+        </button>
+        <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'"
+            class="fa fa-instagram"></button>
+        <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'"
+            class="fa fa-linkedin"></button>
+        <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
+    </div>
+
+    <script src="script/indexScript.js"></script>
+</body>
+
+
+</html>
