@@ -464,6 +464,11 @@
             nav ul {
                 gap: 1rem;
             }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -563,6 +568,8 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+
         }
     </style>
 </head>
@@ -663,7 +670,7 @@
 
     <section id="notes" class="light-section">
         <div class="container">
-            <h2 class="section-title">Course Notes</h2>
+            <h2 class="section-title">Courses Notes</h2>
             <div class="notes-container">
                 <div class="note-item">
                     <h4>Discrete Mathematics</h4>
@@ -695,7 +702,8 @@
                 <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
                     <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
                     <input type="text" name="name" placeholder="Your Name" required />
-                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    <input type="text" name="email" placeholder="Your email address" required />
+                    <textarea name="message" rows="5" placeholder="Your Message..." required></textarea>
                     <button type="submit">Send Message</button>
                     <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
                 </form>
