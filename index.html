@@ -13,6 +13,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->
     <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
     <style>
         /* Global Styles */
@@ -40,6 +41,7 @@
             overflow-x: hidden;
         }
 
+        /* Link Styles */
         a {
             color: var(--color-white);
             text-decoration: none;
@@ -76,27 +78,45 @@
             color: var(--color-pink);
         }
 
+        /* Desktop nav */
         nav ul {
             list-style: none;
             display: flex;
-        }
-
-        nav li {
-            margin-left: 2rem;
+            gap: 1.5rem;
         }
 
         nav li a {
             font-weight: 700;
+            font-size: 1rem;
         }
 
+        /* Social Icons */
         .social-icons {
             display: flex;
             gap: 1rem;
         }
 
-        .social-icons a {
-            font-size: 1.2rem;
+        .social-icons button {
+            width: 25px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            color: var(--color-white);
+            cursor: pointer;
             transition: color 0.3s;
+        }
+
+        .social-icons button:hover {
+            color: var(--color-pink);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+        }
+
+        .nav-open {
+            display: block !important;
         }
 
         /* Hero Section */
@@ -109,7 +129,7 @@
             text-align: center;
             background-color: var(--color-black);
             padding-top: 4rem;
-            /* account for fixed header */
+            /* height of fixed header */
         }
 
         .hero h1 {
@@ -170,13 +190,12 @@
             position: relative;
         }
 
+        /* Section Titles */
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin: 2rem 2rem;
-            margin-left: 0;
+            margin: 0 2rem 2rem 0;
             color: var(--color-pink);
-            position: relative;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -230,6 +249,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            padding: 0 1rem;
         }
 
         .about-content p {
@@ -291,6 +311,7 @@
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
 
         .math-item {
@@ -326,6 +347,7 @@
             align-items: center;
             max-width: 800px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
 
         .note-item {
@@ -370,6 +392,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 0 1rem;
         }
 
         .contact-form {
@@ -425,14 +448,100 @@
             color: #666666;
         }
 
-        /* Responsive */
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+
+            /* Reduce hero font sizes slightly */
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                max-width: 90%;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+        }
+
         @media (max-width: 768px) {
+
+            /* Hide desktop nav, show mobile nav icon */
             nav ul {
                 display: none;
             }
 
             .mobile-nav {
                 display: block;
+                cursor: pointer;
+            }
+
+            /* Stack header items */
+            .container {
+                justify-content: space-between;
+            }
+
+            /* Hero adjustments */
+            .hero {
+                padding-top: 3.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            /* Math grid becomes single column */
+            .math-container {
+                grid-template-columns: 1fr;
+            }
+
+            /* Note items full width with less padding */
+            .note-item {
+                padding: 0.75rem;
+            }
+
+            /* About images shrink */
+            .about-images img {
+                width: 150px;
+                height: 150px;
+            }
+
+            /* Section titles smaller margin */
+            .section-title {
+                font-size: 2rem;
+                margin: 0 1rem 1rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            /* Further reduce paddings and font sizes */
+            section {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                margin: 0 0.5rem 1rem 0;
             }
 
             .video-section iframe {
@@ -440,13 +549,14 @@
                 height: auto;
             }
 
-            .about-images {
-                flex-direction: column;
+            .contact-form input,
+            .contact-form textarea {
+                font-size: 0.9rem;
             }
 
-            .about-images img {
-                width: 150px;
-                height: 150px;
+            .contact-form button {
+                padding: 0.65rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -466,14 +576,14 @@
                 </ul>
             </nav>
             <div class="social-icons">
-                <!-- Replace href="#" with your actual social links -->
-                <a href="https://www.facebook.com/profile.php?id=100024007178107" target="_blank" rel="noopener"><i
-                        class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/kaloyants_gotin_sym/" target="_blank" rel="noopener"><i
-                        class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/" target="_blank" rel="noopener"><i
-                        class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/KaloyanTs" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'"
+                    class="fa fa-facebook">
+                </button>
+                <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'"
+                    class="fa fa-instagram"></button>
+                <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'"
+                    class="fa fa-linkedin"></button>
+                <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
             </div>
         </div>
     </header>
@@ -481,7 +591,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <h1 class="hero-title">Welcome to My Personal Webpage</h1>
-        <p class="hero-desc">I’m a Computer Science undergraduate with a passion for math</p>
+        <p class="hero-desc">I’m a Computer Science undergraduate with a passion for math.</p>
         <a href="#about" class="btn hero-btn">Learn More</a>
         <div class="about-images">
             <!-- Replace src with your actual image URLs -->
@@ -494,7 +604,8 @@
         <div class="container section-content">
             <h2 class="section-title">About Me</h2>
             <div class="about-content fade-in">
-                <p>Hello! I’m a CS final year undergrad. This website serves as my personal portfolio and a place to
+                <p>Hello! I’m Kaloyan Tsvetkov, a CS final year undergrad. This website serves as my personal portfolio
+                    and a place to
                     share my experience, projects and ideas. The page is still under construction, so please bear with
                     me.</p>
             </div>
