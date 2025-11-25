@@ -4,579 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kaloyan Tsvetkov — personal portfolio: projects, notes, and contact." />
     <title>Kaloyan Tsvetkov</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome CDN for Social Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-+hAcH1fF+tYp2d2ObFxSk0XkcRj2E0Nq+kV1UdbmRQ1g8Dpq6nd4bTUW5lxRvmtEAVyozqPcCjV9QzDhdg0kfw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome CDN (legacy v4.7 kept for existing icon classes) -->
     <!-- Favicon -->
     <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
-    <style>
-        /* Global Styles */
-        :root {
-            --color-black: #000000;
-            --color-white: #ffffff;
-            --color-pink: #FFB6C1;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--color-black);
-            color: var(--color-white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Link Styles */
-        a {
-            color: var(--color-white);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: var(--color-pink);
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: var(--color-black);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            border-bottom: 1px solid #333;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-pink);
-        }
-
-        /* Desktop nav */
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        nav li a {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        /* Social Icons */
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-icons button {
-            width: 25px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            color: var(--color-white);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .social-icons button:hover {
-            color: var(--color-pink);
-        }
-
-        /* Mobile Navigation */
-        .mobile-nav {
-            display: none;
-        }
-
-        .nav-open {
-            display: block !important;
-        }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            background-color: var(--color-black);
-            padding-top: 4rem;
-            /* height of fixed header */
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--color-pink);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .hero h1.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s;
-        }
-
-        .hero p.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--color-pink);
-            border-radius: 25px;
-            color: var(--color-pink);
-            font-weight: 700;
-            transition: background-color 0.3s, color 0.3s;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out 0.6s, transform 0.6s ease-out 0.6s;
-        }
-
-        .btn.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .btn:hover {
-            background-color: var(--color-pink);
-            color: var(--color-black);
-        }
-
-        /* Section Styles */
-        section {
-            padding: 6rem 0;
-            position: relative;
-        }
-
-        /* Section Titles */
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin: 0 2rem 2rem 0;
-            color: var(--color-pink);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .section-title.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title::after {
-            content: '';
-            width: 60px;
-            height: 4px;
-            background-color: var(--color-pink);
-            display: block;
-            margin: 0.5rem auto 0;
-        }
-
-        /* Fade-in Utility */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Light & Dark Sections */
-        .light-section {
-            background-color: var(--color-white);
-            color: var(--color-black);
-        }
-
-        .dark-section {
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
-
-        /* About Section */
-        #about {
-            background-color: var(--color-white);
-            color: var(--color-black);
-        }
-
-        .about-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        .about-content p {
-            max-width: 800px;
-            margin-bottom: 2rem;
-        }
-
-        .about-images {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .about-images img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid var(--color-pink);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .about-images img.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Video Section */
-        .video-section {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 4rem 0;
-        }
-
-        .video-section iframe {
-            width: 80%;
-            max-width: 800px;
-            height: 450px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Math Competitions Section */
-        #math {
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
-
-        .math-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .math-item {
-            background-color: var(--color-white);
-            color: var(--color-black);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .math-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .math-item h3 {
-            margin-bottom: 1rem;
-            color: rgb(215, 73, 199);
-        }
-
-        /* Course Notes Section */
-        #notes {
-            background-color: var(--color-white);
-            color: var(--color-black);
-        }
-
-        .notes-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .note-item {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            transition: border-color 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s;
-        }
-
-        .note-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .note-item:hover {
-            border-color: var(--color-pink);
-            transform: scale(1.02);
-        }
-
-        .note-item h4 {
-            margin-bottom: 0.5rem;
-            color: var(--color-black);
-        }
-
-        .note-item a {
-            color: var(--color-pink);
-            font-weight: 700;
-        }
-
-        /* Contact Section */
-        #contact {
-            background-color: var(--color-black);
-            color: var(--color-white);
-        }
-
-        .contact-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 1rem;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #333;
-            border-radius: 5px;
-            background-color: #111;
-            color: var(--color-white);
-            font-family: 'Roboto', sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--color-pink);
-        }
-
-        .contact-form button {
-            padding: 0.75rem;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--color-pink);
-            color: var(--color-black);
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .contact-form button:hover {
-            background-color: #ff9fb1;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--color-black);
-            text-align: center;
-            padding: 2rem 0;
-            border-top: 1px solid #333;
-        }
-
-        footer p {
-            color: #666666;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 992px) {
-
-            /* Reduce hero font sizes slightly */
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-                max-width: 90%;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            header .container {
-                flex-direction: row;
-                align-items: space-between;
-            }
-        }
-
-        @media (max-width: 768px) {
-
-            /* Hide desktop nav, show mobile nav icon */
-            nav ul {
-                display: none;
-            }
-
-            .mobile-nav {
-                display: block;
-                cursor: pointer;
-            }
-
-            /* Stack header items */
-            .container {
-                justify-content: space-between;
-            }
-
-            /* Hero adjustments */
-            .hero {
-                padding-top: 3.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            /* Math grid becomes single column */
-            .math-container {
-                grid-template-columns: 1fr;
-            }
-
-            /* Note items full width with less padding */
-            .note-item {
-                padding: 0.75rem;
-            }
-
-            /* About images shrink */
-            .about-images img {
-                width: 150px;
-                height: 150px;
-            }
-
-            /* Section titles smaller margin */
-            .section-title {
-                font-size: 2rem;
-                margin: 0 1rem 1rem 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-
-            /* Further reduce paddings and font sizes */
-            section {
-                padding: 4rem 0;
-            }
-
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .hero p {
-                font-size: 0.95rem;
-            }
-
-            .btn {
-                padding: 0.65rem 1.25rem;
-                font-size: 0.9rem;
-            }
-
-            .section-title {
-                font-size: 1.75rem;
-                margin: 0 0.5rem 1rem 0;
-            }
-
-            .video-section iframe {
-                width: 100%;
-                height: auto;
-            }
-
-            .contact-form input,
-            .contact-form textarea {
-                font-size: 0.9rem;
-            }
-
-            .contact-form button {
-                padding: 0.65rem;
-                font-size: 0.9rem;
-            }
-
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-
-        }
-    </style>
+    <link rel="stylesheet" href="style/main.css">
 </head>
 
 <body>
@@ -593,13 +30,9 @@
                 </ul>
             </nav>
             <div class="social-icons">
-                <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'"
-                    class="fa fa-facebook">
-                </button>
-                <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'"
-                    class="fa fa-instagram"></button>
-                <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'"
-                    class="fa fa-linkedin"></button>
+                <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'" class="fa fa-facebook"></button>
+                <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'" class="fa fa-instagram"></button>
+                <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'" class="fa fa-linkedin"></button>
                 <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
             </div>
         </div>
@@ -607,12 +40,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <h1 class="hero-title">Welcome to My Personal Webpage</h1>
-        <p class="hero-desc">I’m a Computer Science Bachelor with a passion for math. Currently doing research at INSAIT and pursuing my Master's degree.</p>
+        <h1 class="hero-title">Welcome to my personal webpage</h1>
+        <p class="hero-desc">I’m a final-year Computer Science undergraduate with a passion for mathematics. Currently doing research at INSAIT and preparing for a Master's degree.</p>
         <a href="#about" class="btn hero-btn">Learn More</a>
         <div class="about-images">
             <!-- Replace src with your actual image URLs -->
-            <img src="src/images/profile.webp" alt="Picture of Me" class="fade-in">
+            <img src="src/images/profile.webp" alt="Profile photo" class="fade-in" loading="lazy">
         </div>
     </section>
 
@@ -621,10 +54,7 @@
         <div class="container section-content">
             <h2 class="section-title">About Me</h2>
             <div class="about-content fade-in">
-                <p>Hello! I’m Kaloyan Tsvetkov, a CS final year undergrad. This website serves as my personal portfolio
-                    and a place to
-                    share my experience, projects and ideas. The page is still under construction, so please bear with
-                    me.</p>
+                <p>Hello! I’m Kaloyan Tsvetkov, a final-year Computer Science undergraduate. This website serves as my personal portfolio and a place to share my experience, projects, and ideas. The page is still under construction, so please bear with me.</p>
             </div>
         </div>
     </section>
@@ -640,28 +70,33 @@
             <h2 class="section-title">Experience</h2>
             <div class="math-container">
                 <div class="math-item">
-                    <h3>Teaching assisstant</h3>
-                    <p><b>Years:</b> 2022 - present</p>
-                    <p><b>Details:</b> Giving exercises to undergrads in several courses</p>
+                    <h3>Ph.D. Student @ INSAIT</h3>
+                    <p><b>Period:</b> September 2025 - present</p>
+                    <p><b>Subjects:</b> AI Safety/LRM Scheming, Theory</p>
                 </div>
                 <div class="math-item">
-                    <h3>INSAIT Research Internship</h3>
+                    <h3>Teaching assistant @ FMI</h3>
+                    <p><b>Years:</b> 2022 - 2025</p>
+                    <p><b>Details:</b> Giving tutorials for undergraduate courses.</p>
+                </div>
+                <div class="math-item">
+                    <h3>Research Internship @ INSAIT</h3>
                     <p><b>Period:</b> March 2025 - June 2025</p>
                     <p><b>Subjects:</b> AI Safety/LRM Scheming, Theory</p>
                 </div>
                 <div class="math-item">
-                    <h3>Astea Solutions Full-Stack Internship</h3>
+                    <h3>Full-Stack Internship @ Astea Solutions</h3>
                     <p><b>Period:</b> July 2024 - November 2024</p>
                     <p><b>Details:</b> Building Web based team project</p>
                 </div>
                 <div class="math-item">
                     <h3>FMI Codes</h3>
                     <p><b>Achievement:</b> Second place (2023), First place (2024)</p>
-                    <p><b>Details:</b> University hackaton for building 48-hour project</p>
+                    <p><b>Details:</b> University hackathon for building a 48-hour project</p>
                 </div>
                 <div class="math-item">
-                    <h3>National Undergrauate Math Olympiad</h3>
-                    <p><b>Achievement:</b> 1xSilver (2024), 2xBronze (2023,2025)</p>
+                    <h3>National Undergraduate Math Olympiad</h3>
+                    <p><b>Achievement:</b> 1× Silver (2024), 2× Bronze (2023, 2025)</p>
                 </div>
             </div>
         </div>
@@ -675,7 +110,7 @@
 
     <section id="notes" class="light-section">
         <div class="container">
-            <h2 class="section-title">Courses Notes</h2>
+            <h2 class="section-title">Teaching Notes</h2>
             <div class="notes-container">
                 <div class="note-item">
                     <h4>Discrete Mathematics</h4>
@@ -706,9 +141,16 @@
             <div class="contact-container fade-in">
                 <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
                     <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
-                    <input type="text" name="name" placeholder="Your Name" required />
-                    <input type="text" name="email" placeholder="Your email address" required />
-                    <textarea name="message" rows="5" placeholder="Your Message..." required></textarea>
+
+                    <label class="sr-only" for="contact-name">Name</label>
+                    <input id="contact-name" type="text" name="name" placeholder="Your Name" required />
+
+                    <label class="sr-only" for="contact-email">Email address</label>
+                    <input id="contact-email" type="email" name="email" placeholder="Your email address" required />
+
+                    <label class="sr-only" for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" rows="5" placeholder="Your Message..." required></textarea>
+
                     <button type="submit">Send Message</button>
                     <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
                 </form>
@@ -740,58 +182,19 @@
                     });
                 </script> -->
 
-                <div id="formStatus" style="margin-top: 1rem; text-align: center;"></div>
+                <div id="formStatus" style="margin-top: 1rem; text-align: center;" aria-live="polite"></div>
             </div>
         </div>
     </section>
 
-    <script>
-        function validateForm() {
-            document.getElementById('formStatus').innerHTML = "Sending message...";
-            return true;
-        }
-    </script>
+    <!-- Page behavior is in script/main.js -->
+    <script src="script/main.js"></script>
 
     <footer>
         <p>&copy; 2025 Kaloyan Tsvetkov. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const observerOptions = {
-                threshold: 0.2
-            };
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Observe hero elements
-            const heroTitle = document.querySelector('.hero-title');
-            const heroDesc = document.querySelector('.hero-desc');
-            const heroBtn = document.querySelector('.hero-btn');
-            [heroTitle, heroDesc, heroBtn].forEach(el => observer.observe(el));
-
-            // Observe section titles
-            document.querySelectorAll('.section-title').forEach(el => observer.observe(el));
-
-            // Observe fade-in elements
-            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-            // Observe math items
-            document.querySelectorAll('.math-item').forEach(el => observer.observe(el));
-
-            // Observe note items
-            document.querySelectorAll('.note-item').forEach(el => observer.observe(el));
-
-            // Observe about images
-            document.querySelectorAll('.about-images img').forEach(el => observer.observe(el));
-        });
-    </script>
+    
 </body>
 
 </html>

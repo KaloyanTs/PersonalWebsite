@@ -1,2 +1,2 @@
 # My personal website
-## Here are all the contents of the website, hosted by GitHub Pages.
+Contents of this website (hosted via GitHub Pages).

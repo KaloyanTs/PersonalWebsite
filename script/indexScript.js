@@ -1,26 +1,29 @@
+// Legacy helpers used by `index_old.html`. Keep safe guards so this file
+// can be loaded on pages that don't include the old form elements.
 const submitForm = document.getElementById("submitForm");
 const submitButton = document.getElementById("submitButton");
 const textArea = document.getElementById("textArea");
 
-submitForm.disabled = submitButton.disabled = true;
+if (submitButton) {
+    submitButton.disabled = true;
+}
 
-var buttons = document.querySelectorAll('.resourceBtn');
+const buttons = document.querySelectorAll('.resourceBtn');
+if (buttons && buttons.length) {
+    let maxWidth = 0;
+    buttons.forEach(function (button) {
+        const buttonWidth = button.offsetWidth || 0;
+        if (buttonWidth > maxWidth) maxWidth = buttonWidth;
+    });
 
-var maxWidth = 0;
+    buttons.forEach(function (button) {
+        button.style.width = maxWidth + 'px';
+        button.style.visibility = 'visible';
+    });
+}
 
-buttons.forEach(function (button) {
-    var buttonWidth = button.offsetWidth;
-    if (buttonWidth > maxWidth) {
-        maxWidth = buttonWidth;
-    }
-});
-
-buttons.forEach(function (button) {
-    button.style.width = maxWidth + 'px';
-    button.style.visibility = 'visible';
-});
-
-
-textArea.oninput = () => {
-    submitForm.disabled = submitButton.disabled = textArea.value.length < 11;
-};
+if (textArea && submitButton) {
+    textArea.oninput = () => {
+        submitButton.disabled = textArea.value.length < 11;
+    };
+}
