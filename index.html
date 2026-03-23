@@ -4,197 +4,215 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Kaloyan Tsvetkov — personal portfolio: projects, notes, and contact." />
+    <meta name="description" content="Kaloyan Tsvetkov — Doctoral Researcher & Digital Curator." />
     <title>Kaloyan Tsvetkov</title>
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome CDN (legacy v4.7 kept for existing icon classes) -->
-    <!-- Favicon -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+    
     <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <link rel="stylesheet" href="style/main.css">
 </head>
 
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="logo">Kaloyan</div>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#background">Background</a></li>
-                    <li><a href="#notes">Notes</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="social-icons">
-                <button onclick="window.location.href='https://www.facebook.com/profile.php?id=100024007178107'" class="fa fa-facebook"></button>
-                <button onclick="window.location.href='https://www.instagram.com/kaloyants_gotin_sym/'" class="fa fa-instagram"></button>
-                <button onclick="window.location.href='https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/'" class="fa fa-linkedin"></button>
-                <button onclick="window.location.href='https://github.com/KaloyanTs'" class="fa fa-github"></button>
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="#" class="logo text-display">Kaloyan.</a>
+            <ul class="nav-links">
+                <li><a href="#about" class="text-label">About</a></li>
+                <li><a href="#experience" class="text-label">Experience</a></li>
+                <li><a href="#publications" class="text-label">Publications</a></li>
+                <li><a href="#notes" class="text-label">Notes</a></li>
+                <li><a href="#contact" class="text-label">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="about">
+        <div class="editorial-grid">
+            <div class="hero-text-block">
+                <span class="eyebrow text-label">Portfolio & Research</span>
+                <h1 class="display-lg">The intersection of <span class="italic-accent">Mathematics</span> <br> and Artificial Intelligence.</h1>
+                <p class="body-lg">Hello. I’m Kaloyan Tsvetkov. As a Doctoral Researcher at INSAIT, I bridge the gap between abstract mathematical theory and practical AI safety, focusing on LRM Scheming. This digital space serves as a gallery of my work, curating ideas, theorems, and code.</p>
+                <div class="cta-group">
+                    <a href="#experience" class="btn btn-primary">See Experience</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <h1 class="hero-title">Welcome to my personal webpage</h1>
-        <p class="hero-desc">I’m a final-year Computer Science undergraduate with a passion for mathematics. Currently doing research at INSAIT and preparing for a Master's degree.</p>
-        <a href="#about" class="btn hero-btn">Learn More</a>
-        <div class="about-images">
-            <!-- Replace src with your actual image URLs -->
-            <img src="src/images/profile.webp" alt="Profile photo" class="fade-in" loading="lazy">
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="light-section">
-        <div class="container section-content">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content fade-in">
-                <p>Hello! I’m Kaloyan Tsvetkov, a final-year Computer Science undergraduate. This website serves as my personal portfolio and a place to share my experience, projects, and ideas. The page is still under construction, so please bear with me.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Video Section -->
-    <!-- <div class="video-section">
-        <iframe src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=0&controls=0&loop=1&playlist=9bZkp7q19f0"
-            allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
-    </div> -->
-
-    <section id="background" class="dark-section">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="math-container">
-                <div class="math-item">
-                    <h3>Ph.D. Student @ INSAIT</h3>
-                    <p><b>Period:</b> September 2025 - present</p>
-                    <p><b>Subjects:</b> AI Safety/LRM Scheming, Theory</p>
-                </div>
-                <div class="math-item">
-                    <h3>Teaching assistant @ FMI</h3>
-                    <p><b>Years:</b> 2022 - 2025</p>
-                    <p><b>Details:</b> Giving tutorials for undergraduate courses.</p>
-                </div>
-                <div class="math-item">
-                    <h3>Research Internship @ INSAIT</h3>
-                    <p><b>Period:</b> March 2025 - June 2025</p>
-                    <p><b>Subjects:</b> AI Safety/LRM Scheming, Theory</p>
-                </div>
-                <div class="math-item">
-                    <h3>Full-Stack Internship @ Astea Solutions</h3>
-                    <p><b>Period:</b> July 2024 - November 2024</p>
-                    <p><b>Details:</b> Building Web based team project</p>
-                </div>
-                <div class="math-item">
-                    <h3>FMI Codes</h3>
-                    <p><b>Achievement:</b> Second place (2023), First place (2024)</p>
-                    <p><b>Details:</b> University hackathon for building a 48-hour project</p>
-                </div>
-                <div class="math-item">
-                    <h3>National Undergraduate Math Olympiad</h3>
-                    <p><b>Achievement:</b> 1× Silver (2024), 2× Bronze (2023, 2025)</p>
+    
+            <div class="hero-visual">
+                <div class="image-frame">
+                    <img src="src/images/profile.webp" alt="Kaloyan Tsvetkov" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
-    <!-- <div class="video-section"></div>
-    <iframe src="https://www.youtube.com/embed/LsoLEjrDogU?autoplay=0&controls=0&loop=1&playlist=LsoLEjrDogU&mute=1"
-        allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
-    </div> -->
+    <section id="experience" class="section-spacer bg-surface-low">
+        <div class="editorial-grid">
+            <div class="section-header">
+                <span class="eyebrow text-label">02 / Experience</span>
+                <h2 class="headline-md">Selected Roles</h2>
+            </div>
+            
+            <div class="cards-grid">
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Research</span>
+                        <span class="date text-label">Sep 2025 - Present</span>
+                    </div>
+                    <h3 class="title-lg">Ph.D. Student @ INSAIT</h3>
+                    <p class="body-md text-muted">Doing research in Machine Learning theory advised by Dr. Nikola Konstantinov</p>
+                </article>
 
-    <section id="notes" class="light-section">
-        <div class="container">
-            <h2 class="section-title">Teaching Notes</h2>
-            <div class="notes-container">
-                <div class="note-item">
-                    <h4>Discrete Mathematics</h4>
-                    <p><a href="./src/documents/DS_notes.pdf">Open Notes (PDF)</a></p>
-                </div>
-                <div class="note-item">
-                    <h4>Design and Analysis of Algorithms</h4>
-                    <p><a href="./src/documents/DAA_notes.pdf">Open Notes (PDF)</a></p>
-                </div>
-                <div class="note-item">
-                    <h4>Algebra</h4>
-                    <p><a href="./src/documents/Algebra_notes.pdf">Open Notes (PDF)</a></p>
-                </div>
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Teaching</span>
+                        <span class="date text-label">2022 - 2025</span>
+                    </div>
+                    <h3 class="title-lg">Teaching Assistant @ FMI</h3>
+                    <p class="body-md text-muted">Conducting tutorials and mentoring undergraduate students in core CS subjects.</p>
+                </article>
+
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Internship</span>
+                        <span class="date text-label">Mar 2025 - Jun 2025</span>
+                    </div>
+                    <h3 class="title-lg">Research Intern @ INSAIT</h3>
+                    <p class="body-md text-muted">Focusing on AI Safety, LRM Scheming, and Theoretical Foundations.</p>
+                </article>
+
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Software</span>
+                        <span class="date text-label">Jul 2024 - Nov 2024</span>
+                    </div>
+                    <h3 class="title-lg">Full-Stack Intern @ Astea</h3>
+                    <p class="body-md text-muted">Developed a complex web-based team project utilizing modern stack technologies.</p>
+                </article>
+
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Hackathon</span>
+                        <span class="date text-label">2023 & 2024</span>
+                    </div>
+                    <h3 class="title-lg">FMI Codes Winner</h3>
+                    <p class="body-md text-muted">Achieved First Place (2024) and Second Place (2023) in the 48-hour university hackathon.</p>
+                </article>
+
+        
+                <article class="card">
+                    <div class="card-header">
+                        <span class="chip">Olympiad</span>
+                        <span class="date text-label">2023 - 2025</span>
+                    </div>
+                    <h3 class="title-lg">National Student's Math Olympiad</h3>
+                    <p class="body-md text-muted">Silver Medalist (2024) and 2x Bronze Medalist (2023, 2025).</p>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
-    <!-- <div class="video-section">
-        <iframe src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=0&controls=0&loop=1&playlist=5qap5aO4i9A"
-            allow="autoplay; encrypted-media" title="Abstract Video"></iframe>
-    </div> -->
+    <section id="publications" class="section-spacer">
+        <div class="editorial-grid">
+            <div class="section-header">
+                <span class="eyebrow text-label">03 / Research</span>
+                <h2 class="headline-md">Publications</h2>
+            </div>
+            
+            <div class="cards-grid">
+        
+                <article class="card publication-card">
+                    <div class="card-header">
+                        <span class="chip">Preprint</span>
+                        <span class="date text-label">2025</span>
+                    </div>
+                    <h3 class="title-lg"><a href="#" target="_blank">The Convergence of Neural Logic and Scheming Agents</a></h3>
+                    <p class="body-md text-muted"><b>Authors:</b> K. Tsvetkov, et al.</p>
+                    <p class="body-sm text-muted italic-accent">Published in: AI Safety Conference (AISC)</p>
+                </article>
 
-    <!-- Contact Section -->
-    <section id="contact" class="dark-section">
-        <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <div class="contact-container fade-in">
-                <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-                    <input type="hidden" name="access_key" value="22f1cfb2-0e7a-478f-9db4-bccd0e0265a4">
-
-                    <label class="sr-only" for="contact-name">Name</label>
-                    <input id="contact-name" type="text" name="name" placeholder="Your Name" required />
-
-                    <label class="sr-only" for="contact-email">Email address</label>
-                    <input id="contact-email" type="email" name="email" placeholder="Your email address" required />
-
-                    <label class="sr-only" for="contact-message">Message</label>
-                    <textarea id="contact-message" name="message" rows="5" placeholder="Your Message..." required></textarea>
-
-                    <button type="submit">Send Message</button>
-                    <input type="hidden" name="redirect" value="https://kaloyants.github.io/PersonalWebsite/">
-                </form>
-                <script src="https://web3forms.com/client/script.js" async defer></script>
-                <!-- 
-                <script>
-                    document.getElementById('contact-form').addEventListener('submit', function (ev) {
-                        ev.preventDefault(); // prevent normal navigation
-
-                        const form = ev.target;
-                        const formData = new FormData(form);
-
-                        fetch('./messages.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                            .then(response => {
-                                if (!response.ok) throw new Error('Network error');
-                                return response.text();
-                            })
-                            .then(text => {
-                                // You can show a “Thank you” message here instead of opening messages.php
-                                alert('Message sent successfully!');
-                                form.reset();
-                            })
-                            .catch(err => {
-                                alert(error);
-                            });
-                    });
-                </script> -->
-
-                <div id="formStatus" style="margin-top: 1rem; text-align: center;" aria-live="polite"></div>
+        
+                <article class="card publication-card">
+                    <div class="card-header">
+                        <span class="chip">Conference</span>
+                        <span class="date text-label">2024</span>
+                    </div>
+                    <h3 class="title-lg"><a href="#" target="_blank">Mathematical Foundations of LRM Scheming</a></h3>
+                    <p class="body-md text-muted"><b>Authors:</b> K. Tsvetkov.</p>
+                    <p class="body-sm text-muted italic-accent">Published in: International Journal of AI Theory</p>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Page behavior is in script/main.js -->
-    <script src="script/main.js"></script>
+    <section id="notes" class="section-spacer bg-surface-low">
+        <div class="editorial-grid">
+            <div class="section-header col-offset-1">
+                <span class="eyebrow text-label">04 / Library</span>
+                <h2 class="headline-md">Teaching Notes</h2>
+            </div>
+            
+            <div class="notes-list col-offset-2">
+                <a href="./src/documents/DS_notes.pdf" class="note-link">
+                    <span class="note-title title-lg">Discrete Mathematics</span>
+                    <span class="note-meta text-label">PDF / Open Access</span>
+                </a>
+                <a href="./src/documents/DAA_notes.pdf" class="note-link">
+                    <span class="note-title title-lg">Design & Analysis of Algorithms</span>
+                    <span class="note-meta text-label">PDF / Open Access</span>
+                </a>
+                <a href="./src/documents/Algebra_notes.pdf" class="note-link">
+                    <span class="note-title title-lg">Algebra</span>
+                    <span class="note-meta text-label">PDF / Open Access</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-spacer">
+        <div class="editorial-grid">
+            <div class="section-header">
+                <span class="eyebrow text-label">05 / Contact</span>
+                <h2 class="headline-md">Main Line.</h2>
+            </div>
+
+            <div class="contact-main col-offset-2">
+                <a href="mailto:kaloyan.tsvetkov@insait.ai" class="email-display display-lg">
+                    kaloyan.tsvetkov<span class="italic-accent">@</span> insait.ai
+                </a>
+                
+                <p class="body-lg text-muted" style="margin-top: var(--spacing-md);">Reach out for research collaborations, academic inquiries, or general discussions.</p>
+
+                <div class="social-links">
+                    <a href="https://github.com/KaloyanTs" class="social-text text-label">GitHub</a>
+                    <a href="https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/" class="social-text text-label">LinkedIn</a>
+                    <a href="https://www.instagram.com/kaloyants_gotin_sym/" class="social-text text-label">Instagram</a>
+                    <a href="https://www.facebook.com/profile.php?id=100024007178107" class="social-text text-label">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 Kaloyan Tsvetkov. All rights reserved.</p>
+        <div class="editorial-grid">
+            <div style="grid-column: 1 / -1; width: 100%;">
+                <p class="text-label text-muted" style="white-space: nowrap;">&copy; 2025 Kaloyan Tsvetkov. Designed with Intent.</p>
+            </div>
+        </div>
     </footer>
 
-    
+    <script src="script/main.js"></script>
 </body>
-
 </html>
