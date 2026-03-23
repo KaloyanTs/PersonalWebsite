@@ -26,6 +26,21 @@
         document.querySelectorAll('.about-images img').forEach(el => observer.observe(el));
     }
 
+    function initCardObserver() {
+        const cardObserverOptions = { threshold: 0.15 };
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, cardObserverOptions);
+
+        document.querySelectorAll('.card').forEach(card => cardObserver.observe(card));
+    }
+
     function initContactHelpers() {
         // Simple status indicator when the contact form is submitted.
         const form = document.getElementById('contact-form');
@@ -39,6 +54,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         initObservers();
+        initCardObserver();
         initContactHelpers();
     });
 })();
