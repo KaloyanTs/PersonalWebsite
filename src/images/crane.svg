@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title" class="px">
+<title>crane.svg - tower crane game prop</title>
+<style>
+  .px { shape-rendering: crispEdges; }
+  .shadow { fill: #000; opacity: .12; }
+</style>
+<rect x="46" y="137" width="68" height="8" class="shadow" rx="4" ry="4"/>
+
+<!-- base stone -->
+<rect x="52" y="126" width="36" height="10" fill="#20202a"/>
+<rect x="56" y="130" width="28" height="6" fill="#b8b0a6"/>
+<rect x="56" y="130" width="28" height="2" fill="#e5ded3"/>
+<rect x="68" y="122" width="8" height="8" fill="#20202a"/>
+<rect x="70" y="124" width="4" height="4" fill="#6e7680"/>
+
+<!-- mast outline -->
+<rect x="66" y="56" width="16" height="70" fill="#20202a"/>
+<rect x="70" y="60" width="8" height="62" fill="#d89515"/>
+<rect x="72" y="62" width="4" height="58" fill="#ffbf27"/>
+<!-- mast lattice -->
+<rect x="70" y="68" width="8" height="2" fill="#9b5b00"/>
+<rect x="70" y="84" width="8" height="2" fill="#9b5b00"/>
+<rect x="70" y="100" width="8" height="2" fill="#9b5b00"/>
+<path d="M70 62 L78 70 L78 74 L70 66 Z" fill="#9b5b00"/>
+<path d="M78 70 L70 78 L70 82 L78 74 Z" fill="#9b5b00"/>
+<path d="M70 78 L78 86 L78 90 L70 82 Z" fill="#9b5b00"/>
+<path d="M78 86 L70 94 L70 98 L78 90 Z" fill="#9b5b00"/>
+<path d="M70 94 L78 102 L78 106 L70 98 Z" fill="#9b5b00"/>
+<path d="M78 102 L70 110 L70 114 L78 106 Z" fill="#9b5b00"/>
+
+<!-- turntable + cabin -->
+<rect x="58" y="46" width="32" height="14" fill="#20202a"/>
+<rect x="62" y="50" width="24" height="6" fill="#565f67"/>
+<rect x="62" y="56" width="24" height="2" fill="#39414a"/>
+<rect x="62" y="60" width="24" height="6" fill="#20202a"/>
+<rect x="66" y="64" width="16" height="12" fill="#20202a"/>
+<rect x="68" y="66" width="12" height="8" fill="#42a5f5"/>
+<rect x="70" y="68" width="8" height="4" fill="#aee2ff"/>
+
+<!-- top mast -->
+<rect x="70" y="30" width="8" height="18" fill="#20202a"/>
+<rect x="72" y="32" width="4" height="14" fill="#e5a317"/>
+<rect x="69" y="26" width="10" height="6" fill="#20202a"/>
+<rect x="71" y="28" width="6" height="2" fill="#7f8b96"/>
+
+<!-- jib -->
+<rect x="82" y="42" width="42" height="12" fill="#20202a"/>
+<rect x="84" y="44" width="38" height="8" fill="#e5a317"/>
+<rect x="84" y="44" width="38" height="2" fill="#ffbf27"/>
+<path d="M88 50 L94 44 L98 44 L92 50 Z" fill="#9b5b00"/>
+<path d="M96 50 L102 44 L106 44 L100 50 Z" fill="#9b5b00"/>
+<path d="M104 50 L110 44 L114 44 L108 50 Z" fill="#9b5b00"/>
+<path d="M112 50 L118 44 L122 44 L116 50 Z" fill="#9b5b00"/>
+<rect x="122" y="42" width="6" height="12" fill="#20202a"/>
+<rect x="124" y="44" width="2" height="8" fill="#e5a317"/>
+
+<!-- counter-jib and weights -->
+<rect x="42" y="42" width="16" height="12" fill="#20202a"/>
+<rect x="44" y="44" width="12" height="8" fill="#d89515"/>
+<path d="M44 50 L50 44 L54 44 L48 50 Z" fill="#9b5b00"/>
+<rect x="30" y="44" width="12" height="16" fill="#20202a"/>
+<rect x="32" y="46" width="8" height="12" fill="#b8b0a6"/>
+<rect x="32" y="46" width="8" height="2" fill="#e5ded3"/>
+
+<!-- cables -->
+<path d="M74 28 L37 46" stroke="#20202a" stroke-width="2" fill="none" stroke-linecap="square"/>
+<path d="M74 28 L122 44" stroke="#20202a" stroke-width="2" fill="none" stroke-linecap="square"/>
+
+<!-- pulley and hook -->
+<rect x="112" y="54" width="10" height="8" fill="#20202a"/>
+<rect x="114" y="56" width="6" height="4" fill="#8f98a3"/>
+<rect x="116" y="62" width="2" height="16" fill="#20202a"/>
+<rect x="116" y="78" width="2" height="8" fill="#20202a"/>
+<rect x="110" y="86" width="14" height="18" fill="#20202a"/>
+<rect x="112" y="88" width="10" height="14" fill="#f0b52f"/>
+<rect x="112" y="90" width="10" height="2" fill="#20202a"/>
+<rect x="112" y="96" width="10" height="2" fill="#20202a"/>
+<rect x="114" y="104" width="6" height="2" fill="#20202a"/>
+<path d="M116 106 L122 106 L122 110 L120 112 L118 114 L118 118 L116 120 L112 120 L110 118 L110 114 L112 112 L114 110 L114 108 L116 106 Z" fill="#20202a"/>
+<path d="M116 108 L120 108 L120 110 L118 112 L116 114 L116 118 L114 118 L112 116 L112 114 L114 112 L116 110 Z" fill="#8f98a3"/>
+
+<!-- feet -->
+<rect x="50" y="134" width="6" height="4" fill="#20202a"/>
+<rect x="84" y="134" width="6" height="4" fill="#20202a"/>
+</svg>

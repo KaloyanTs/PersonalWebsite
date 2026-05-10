@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title" class="px">
+<title>block-experience.svg - office floor theme</title>
+<style>
+  .px { shape-rendering: crispEdges; }
+  .ink { fill: #20202a; }
+  .outline { fill: #20202a; }
+  .shine { fill: rgba(255,255,255,.35); }
+  .shadow { fill: #000; opacity: .16; }
+  .soft { opacity: .72; }
+</style>
+<rect x="24" y="135" width="112" height="9" fill="#000" class="shadow" rx="4" ry="4"/>
+<rect x="24" y="34" width="112" height="18" fill="#20202a"/>
+<rect x="28" y="38" width="104" height="10" fill="#59aee2"/>
+<rect x="32" y="41" width="96" height="3" fill="#9de0ff" opacity="0.35"/>
+<rect x="24" y="116" width="112" height="14" fill="#20202a"/>
+<rect x="28" y="119" width="104" height="8" fill="#59aee2"/>
+<rect x="23" y="41" width="17" height="20" fill="#20202a"/>
+<rect x="27" y="45" width="9" height="12" fill="#9de0ff"/>
+<rect x="120" y="41" width="17" height="20" fill="#20202a"/>
+<rect x="124" y="45" width="9" height="12" fill="#9de0ff"/>
+<rect x="24" y="50" width="112" height="72" fill="#20202a"/>
+<rect x="28" y="54" width="104" height="64" fill="#257fbd"/>
+<rect x="31" y="60" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="119" y="66" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="31" y="72" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="119" y="78" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="31" y="84" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="119" y="90" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="31" y="96" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="119" y="102" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="31" y="108" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="119" y="114" width="10" height="3" fill="#0c5c94" opacity="0.65"/>
+<rect x="53" y="65" width="3" height="3" fill="#0c5c94" opacity="0.35"/>
+<rect x="80" y="77" width="3" height="3" fill="#0c5c94" opacity="0.35"/>
+<rect x="108" y="66" width="3" height="3" fill="#0c5c94" opacity="0.35"/>
+<rect x="66" y="104" width="3" height="3" fill="#0c5c94" opacity="0.35"/>
+<rect x="120" y="108" width="3" height="3" fill="#0c5c94" opacity="0.35"/>
+<rect x="38" y="59" width="32" height="36" fill="#20202a"/>
+<rect x="42" y="63" width="24" height="28" fill="#48515d"/>
+<rect x="46" y="67" width="16" height="20" fill="#082b4b"/>
+<rect x="48" y="69" width="6" height="16" fill="#79d9ff"/>
+<rect x="55" y="69" width="6" height="16" fill="#1d7dc4"/>
+<rect x="53" y="67" width="2" height="20" fill="#20202a"/>
+<rect x="46" y="77" width="16" height="2" fill="#20202a"/>
+<rect x="39" y="96" width="30" height="5" fill="#20202a"/>
+<rect x="42" y="96" width="24" height="3" fill="#d5c1a5"/>
+<rect x="47" y="67" width="5" height="20" fill="#eef6ff" opacity="0.9"/>
+<rect x="56" y="67" width="5" height="20" fill="#eef6ff" opacity="0.9"/>
+<rect x="90" y="59" width="32" height="36" fill="#20202a"/>
+<rect x="94" y="63" width="24" height="28" fill="#48515d"/>
+<rect x="98" y="67" width="16" height="20" fill="#082b4b"/>
+<rect x="100" y="69" width="6" height="16" fill="#79d9ff"/>
+<rect x="107" y="69" width="6" height="16" fill="#1d7dc4"/>
+<rect x="105" y="67" width="2" height="20" fill="#20202a"/>
+<rect x="98" y="77" width="16" height="2" fill="#20202a"/>
+<rect x="91" y="96" width="30" height="5" fill="#20202a"/>
+<rect x="94" y="96" width="24" height="3" fill="#d5c1a5"/>
+<rect x="99" y="67" width="5" height="20" fill="#eef6ff" opacity="0.9"/>
+<rect x="108" y="67" width="5" height="20" fill="#eef6ff" opacity="0.9"/>
+<rect x="46" y="96" width="20" height="5" fill="#20202a"/>
+<rect x="48" y="96" width="16" height="3" fill="#ffd76d"/>
+<rect x="94" y="96" width="20" height="5" fill="#20202a"/>
+<rect x="96" y="96" width="16" height="3" fill="#ffd76d"/>
+<rect x="72" y="64" width="16" height="21" fill="#20202a"/>
+<rect x="76" y="68" width="8" height="8" fill="#f2f2f2"/>
+<path d="M 80 73 L 87 80 L 80 87 L 73 80 Z" fill="#20202a"/>
+<path d="M 80 77 L 83 80 L 80 83 L 77 80 Z" fill="#ff6b48"/>
+<rect x="68" y="100" width="24" height="15" fill="#20202a"/>
+<rect x="72" y="103" width="16" height="9" fill="#6e4a2e"/>
+<rect x="76" y="98" width="8" height="5" fill="#d8b27a"/>
+</svg>

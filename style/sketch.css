@@ -1,0 +1,141 @@
+:root {
+    /* Hard overrides for sketch MS Paint Look */
+    --surface: #ffffff !important;
+    --surface-container-low: #ffffff !important;
+    --surface-container-high: #ffffff !important;
+    --surface-bright: #ffffff !important;
+    --surface-container-lowest: #ffffff !important;
+    --surface-container-highest: #ffffff !important;
+
+    /* Primary / Accents */
+    --primary: #000000 !important;
+    --primary-container: #ffffff !important;
+    --on-primary-fixed: #ffffff !important;
+    --primary-fixed-dim: #000000 !important;
+
+    /* Secondary / Utility */
+    --secondary-container: #ffffff !important;
+    --on-secondary-container: #000000 !important;
+    --outline-variant: #000000 !important;
+
+    /* Text */
+    --on-surface: #000000 !important;
+    --on-surface-variant: #000000 !important;
+    
+    /* Hard solid shadows */
+    --shadow-ambient: 4px 4px 0px #000000 !important;
+    --glass-blur: none !important;
+}
+
+/* Force everything to look typed */
+* {
+    font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Marker Felt", "MS Sans Serif", sans-serif !important;
+    color: #000 !important;
+}
+
+body {
+    background-color: #fff !important;
+    background-image: none !important;
+}
+
+/* Base wobbly borders */
+.glass-nav, .card, .btn, .chip, .hero-visual img, .image-frame {
+    border: solid 2px #000 !important;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+    box-shadow: 4px 4px 0px #000 !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    transition: none !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #000 !important;
+    color: #fff !important;
+    border: solid 3px #000 !important;
+    border-radius: 15px 225px 15px 255px/255px 15px 225px 15px !important;
+}
+
+.btn-primary:hover {
+    box-shadow: 6px 6px 0px #000 !important;
+    transform: translate(-2px, -2px) !important;
+    background: #222 !important;
+}
+
+.btn-secondary {
+    border-width: 2px 4px 3px 2px !important;
+}
+
+.btn-secondary:hover {
+    box-shadow: 6px 6px 0px #000 !important;
+    transform: translate(-2px, -2px) !important;
+}
+
+/* Cards */
+.card {
+    border-width: 3px 2px 4px 2px !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.card-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+}
+
+.card .date {
+    position: static !important;
+    display: block !important;
+    margin-top: 5px !important;
+}
+
+.card:hover {
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 7px 7px 0px #000 !important;
+}
+
+/* Make images look bad / drawn */
+img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+img:hover {
+    transform: scale(1.05) !important;
+    z-index: 10 !important;
+}
+
+/* Accents */
+.italic-accent {
+    font-style: italic !important;
+    text-decoration: underline !important;
+}
+
+/* Misc overrides to ensure MS Paint feel */
+.bg-surface-low, .hero {
+    background: transparent !important;
+}
+
+.section-spacer {
+    border-top: 2px dashed #000 !important;
+}
+
+.chip {
+    padding: 0.2rem 0.6rem;
+    border: 2px solid #000 !important;
+    border-radius: 10px 225px 15px 255px/255px 15px 225px 10px !important;
+}
+
+/* Doodle Canvas */
+#doodle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+}

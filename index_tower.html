@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kaloyan Tsvetkov | Tower Portfolio</title>
+    <link rel="stylesheet" href="style/tower.css">
+    <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui-layer">
+            <div id="start-screen" class="overlay hidden">
+                <h1>TOWER BLOXX</h1>
+                <p>Build your career. Reach for the stars.</p>
+                <button id="start-btn">Start Building</button>
+            </div>
+
+            <!-- Fancy Glassmorphic Dashboard -->
+            <div id="glass-dashboard" class="hidden">
+                <div class="dash-section">
+                    <div class="dash-label">ALTITUDE</div>
+                    <div id="current-score" class="dash-value highlight">0m</div>
+                    <div id="last-milestone" class="dash-sub">Milestone</div>
+                </div>
+                <div class="dash-divider"></div>
+                <div class="dash-section">
+                    <div class="dash-label">NEXT DROP</div>
+                    <div id="next-block-name" class="dash-value">Block</div>
+                </div>
+                <div class="dash-divider"></div>
+                <div class="dash-section combo-section">
+                    <div class="dash-label" id="combo-title">COMBO STREAK</div>
+                    <div id="combo-text" class="dash-value text-gold">x0</div>
+                    <div id="combo-timer-container">
+                        <div id="combo-timer-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Timeline Left -->
+            <div id="progress-timeline" class="hidden">
+                <!-- Injected via JS -->
+            </div>
+
+            <div id="game-over" class="overlay hidden">
+                <h2>Tower Tipped!</h2>
+                <p id="final-stats"></p>
+                <button id="restart-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden template for info blocks if needed for off-screen rendering -->
+    <div id="content-source" style="display:none;">
+        <!-- Content will be injected from tower_game.js -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="script/tower_game.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="94" viewBox="0 0 100 94" role="img" aria-labelledby="title" class="px">
+<title>crane-top.svg - crane boom assembly with no margin</title>
+<style>.px{shape-rendering:crispEdges}</style>
+<!-- collar/socket for stem; stem width = 16 and should align centered at x=44..60 -->
+<rect x="38" y="82" width="28" height="12" fill="#20202a"/>
+<rect x="42" y="84" width="20" height="6" fill="#565f67"/>
+<rect x="42" y="90" width="20" height="2" fill="#39414a"/>
+<rect x="44" y="92" width="16" height="2" fill="#20202a"/>
+<!-- cabin / turntable -->
+<rect x="34" y="60" width="32" height="14" fill="#20202a"/>
+<rect x="38" y="64" width="24" height="6" fill="#565f67"/>
+<rect x="42" y="48" width="16" height="18" fill="#20202a"/>
+<rect x="44" y="50" width="12" height="12" fill="#42a5f5"/>
+<rect x="46" y="52" width="8" height="6" fill="#aee2ff"/>
+<!-- top mast -->
+<rect x="46" y="14" width="12" height="34" fill="#20202a"/>
+<rect x="48" y="16" width="8" height="30" fill="#d89515"/>
+<rect x="50" y="16" width="4" height="30" fill="#ffbf27"/>
+<rect x="47" y="10" width="10" height="6" fill="#20202a"/>
+<rect x="49" y="12" width="6" height="2" fill="#7f8b96"/>
+<!-- tower lattice on top mast -->
+<rect x="48" y="26" width="8" height="2" fill="#9b5b00"/>
+<path d="M48 16 L56 24 L56 28 L48 20 Z" fill="#9b5b00"/>
+<path d="M56 24 L48 32 L48 36 L56 28 Z" fill="#9b5b00"/>
+<path d="M48 32 L56 40 L56 44 L48 36 Z" fill="#9b5b00"/>
+<!-- counter jib -->
+<rect x="12" y="44" width="24" height="12" fill="#20202a"/>
+<rect x="14" y="46" width="20" height="8" fill="#d89515"/>
+<path d="M16 52 L24 46 L28 46 L20 52 Z" fill="#9b5b00"/>
+<!-- counterweight -->
+<rect x="0" y="46" width="12" height="16" fill="#20202a"/>
+<rect x="2" y="48" width="8" height="12" fill="#b8b0a6"/>
+<rect x="2" y="48" width="8" height="2" fill="#e5ded3"/>
+<!-- main jib -->
+<rect x="58" y="44" width="36" height="12" fill="#20202a"/>
+<rect x="60" y="46" width="32" height="8" fill="#e5a317"/>
+<rect x="60" y="46" width="32" height="2" fill="#ffbf27"/>
+<path d="M64 52 L72 46 L76 46 L68 52 Z" fill="#9b5b00"/>
+<path d="M72 52 L80 46 L84 46 L76 52 Z" fill="#9b5b00"/>
+<path d="M80 52 L88 46 L92 46 L84 52 Z" fill="#9b5b00"/>
+<rect x="94" y="44" width="6" height="12" fill="#20202a"/>
+<rect x="96" y="46" width="2" height="8" fill="#e5a317"/>
+<!-- cables -->
+<path d="M52 12 L8 48" stroke="#20202a" stroke-width="2" fill="none" stroke-linecap="square"/>
+<path d="M52 12 L96 46" stroke="#20202a" stroke-width="2" fill="none" stroke-linecap="square"/>
+<!-- trolley / pulley -->
+<rect x="82" y="56" width="10" height="8" fill="#20202a"/>
+<rect x="84" y="58" width="6" height="4" fill="#8f98a3"/>
+<rect x="86" y="64" width="2" height="18" fill="#20202a"/>
+<!-- hook block -->
+<rect x="80" y="82" width="14" height="8" fill="#20202a"/>
+<rect x="82" y="84" width="10" height="4" fill="#f0b52f"/>
+<rect x="82" y="84" width="10" height="2" fill="#20202a"/>
+<!-- hook -->
+<path d="M86 90 L92 90 L92 92 L90 94 L88 94 L88 92 L86 92 Z" fill="#20202a"/>
+</svg>

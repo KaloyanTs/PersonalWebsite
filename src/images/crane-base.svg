@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="18" viewBox="0 0 40 18" role="img" aria-labelledby="title" class="px">
+<title>crane-base.svg - crane base with no margin</title>
+<style>.px{shape-rendering:crispEdges}</style>
+<!-- stone footing -->
+<rect x="0" y="8" width="40" height="10" fill="#20202a"/>
+<rect x="4" y="10" width="32" height="8" fill="#b8b0a6"/>
+<rect x="4" y="10" width="32" height="2" fill="#e5ded3"/>
+<!-- steel socket -->
+<rect x="12" y="0" width="16" height="10" fill="#20202a"/>
+<rect x="14" y="2" width="12" height="6" fill="#565f67"/>
+<rect x="14" y="8" width="12" height="2" fill="#39414a"/>
+<!-- stem opening guide, same width as stem -->
+<rect x="14" y="0" width="12" height="2" fill="#7f8b96"/>
+<!-- side feet -->
+<rect x="0" y="16" width="4" height="2" fill="#20202a"/>
+<rect x="36" y="16" width="4" height="2" fill="#20202a"/>
+</svg>
