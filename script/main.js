@@ -37,8 +37,14 @@
                 }
             });
         }, cardObserverOptions);
-
-        document.querySelectorAll('.card').forEach(card => cardObserver.observe(card));
+        
+        const rotations = ['rotate-1', 'rotate-neg1', 'rotate-2', 'rotate-neg2'];
+        document.querySelectorAll('.card').forEach((card, i) => {
+            // Random rotation removed as per user request
+            // const randomRotation = rotations[i % rotations.length];
+            // card.classList.add(randomRotation);
+            cardObserver.observe(card);
+        });
     }
 
     function initContactHelpers() {

@@ -15,9 +15,10 @@
     <!-- Favicon -->
     <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
-    
-    <!-- Font Awesome (Legacy support) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Font Awesome (Legacy support) - Loaded asynchronously -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></noscript>
     
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/sketch.css">
@@ -25,7 +26,7 @@
 
 <body>
     <script data-goatcounter="https://kaloyants.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+        async src="https://gc.zgo.at/count.js"></script>
     <!-- Navigation: Floating Glass -->
     <nav class="glass-nav">
         <div class="nav-content">
@@ -55,7 +56,7 @@
             <!-- Image offset for asymmetry -->
             <div class="hero-visual">
                 <div class="image-frame">
-                <img src="src/images/profile_work.webp" alt="me" loading="lazy">
+                <img src="src/images/profile_work.webp" alt="me" fetchpriority="high" loading="eager">
                 </div>
             </div>
         </div>
@@ -203,14 +204,38 @@
 
     <footer>
         <div class="editorial-grid">
-            <div style="grid-column: 1 / -1; width: 100%;">
-                <p class="text-label text-muted" style="white-space: nowrap;">&copy; 2025 <b>Kaloyan Tsvetkov</b>. All rights reserved.</p>
+            <div style="grid-column: 1 / -1; width: 100%; text-align: center;">
+                <p class="text-label text-muted" style="margin-bottom: 8px;">&copy; 2025 <b>Kaloyan Tsvetkov</b>. All rights reserved.</p>
+                <span class="gem-launcher" onclick="openTowerGame()" style="cursor: pointer; transition: transform 0.3s; display: inline-block; width: 18px; height: 18px;" title="Play Tower Bloxx">
+                    <img src="./src/images/diamong.svg" alt="Play" style="width: 100%; height: 100%; filter: grayscale(100%);">
+                </span>
             </div>
         </div>
     </footer>
 
-    <!-- Page behavior -->
-    <script src="script/main.js"></script>
-    <script src="script/doodles.js"></script>
+    <!-- Full-screen Game Modal -->
+    <div id="tower-bloxx-modal" class="hidden">
+        <div class="modal-header">
+            <button class="btn btn-secondary" onclick="closeTowerGame()">Close</button>
+            <button class="btn btn-secondary" id="btn-start-over" onclick="resetGame()">Start Over</button>
+        </div>
+        <div id="tower-game-container" style="flex: 1; position: relative; cursor: grab;" tabindex="0">
+            <!-- Canvas gets appended here by Matter.js -->
+            <!-- Popup for achievements removed for continuous gameplay -->
+            <!--
+            <div id="achievement-popup" class="hidden card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; text-align: center; max-width: 80%; width: 300px; cursor: default;">
+                <i class="fa fa-times" onclick="continueGame()" style="position: absolute; top: 15px; right: 15px; cursor: pointer; color: var(--text-muted); font-size: 1.2rem;" aria-label="Close popup"></i>
+                <div id="achievement-type" class="text-label" style="font-size: 0.8rem; text-transform: uppercase;">Type</div>
+                <h2 id="achievement-title" class="title-lg" style="margin: 15px 0;">Title</h2>
+                <button id="btn-continue-game" class="btn btn-primary" onclick="continueGame()">Continue Building</button>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <script src="script/main.js" defer></script>
+    <script src="script/doodles.js" defer></script>
+    <script src="script/matter.min.js" defer></script>
+    <script src="script/tower_bloxx_pure.js" defer></script>
 </body>
 </html>

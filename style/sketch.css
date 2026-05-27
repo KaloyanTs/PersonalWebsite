@@ -93,8 +93,46 @@ body {
 }
 
 .card:hover {
-    transform: translate(-2px, -2px) !important;
+    transform: translate(-2px, -2px) rotate(1deg) !important;
     box-shadow: 7px 7px 0px #000 !important;
+}
+
+/* Base rotations removed as per user request to start untilted */
+/* .rotate-1 { transform: rotate(1deg) !important; }
+.rotate-neg1 { transform: rotate(-1deg) !important; }
+.rotate-2 { transform: rotate(2deg) !important; }
+.rotate-neg2 { transform: rotate(-2deg) !important; } */
+
+/* Modal Game Container */
+#tower-bloxx-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+}
+
+#tower-bloxx-modal.hidden {
+    display: none !important;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    z-index: 10000;
+}
+
+.sticky-launch-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 /* Make images look bad / drawn */
