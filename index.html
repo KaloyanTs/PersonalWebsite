@@ -206,7 +206,7 @@
         <div class="editorial-grid">
             <div style="grid-column: 1 / -1; width: 100%; text-align: center;">
                 <p class="text-label text-muted" style="margin-bottom: 8px;">&copy; 2025 <b>Kaloyan Tsvetkov</b>. All rights reserved.</p>
-                <span class="gem-launcher" onclick="openTowerGame()" style="cursor: pointer; transition: transform 0.3s; display: inline-block; width: 18px; height: 18px;" title="Play Tower Bloxx">
+                <span class="gem-launcher" onclick="openTowerGame(this)" style="cursor: pointer; display: inline-block; width: 18px; height: 18px; touch-action: manipulation;" title="Play Tower Bloxx">
                     <img src="./src/images/diamong.svg" alt="Play" style="width: 100%; height: 100%; filter: grayscale(100%);">
                 </span>
             </div>
@@ -215,21 +215,37 @@
 
     <!-- Full-screen Game Modal -->
     <div id="tower-bloxx-modal" class="hidden">
-        <div class="modal-header">
-            <button class="btn btn-secondary" onclick="closeTowerGame()">Close</button>
-            <button class="btn btn-secondary" id="btn-start-over" onclick="resetGame()">Start Over</button>
+        <div class="modal-header" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 10000; display: block; padding: 0; margin: 0; height: 0;">
+            <button class="restart-btn" onclick="resetGame()" style="position: absolute; top: 15px; right: 60px; z-index: 1000; background: none; border: none; color: white; font-size: 28px; cursor: pointer; text-shadow: 2px 2px 0px #000;" title="Start Over">↻</button>
+            <button class="close-btn" onclick="closeTowerGame()" style="position: absolute; top: 15px; right: 20px; z-index: 1000; background: none; border: none; color: white; font-size: 38px; font-weight: bold; line-height: 28px; cursor: pointer; text-shadow: 2px 2px 0px #000;" title="Close">&times;</button>
         </div>
-        <div id="tower-game-container" style="flex: 1; position: relative; cursor: grab;" tabindex="0">
+        <div id="tower-game-container" style="position: relative; width: 100%; height: 100%; overflow: hidden; background: skyblue;">
             <!-- Canvas gets appended here by Matter.js -->
-            <!-- Popup for achievements removed for continuous gameplay -->
-            <!--
-            <div id="achievement-popup" class="hidden card" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; text-align: center; max-width: 80%; width: 300px; cursor: default;">
-                <i class="fa fa-times" onclick="continueGame()" style="position: absolute; top: 15px; right: 15px; cursor: pointer; color: var(--text-muted); font-size: 1.2rem;" aria-label="Close popup"></i>
-                <div id="achievement-type" class="text-label" style="font-size: 0.8rem; text-transform: uppercase;">Type</div>
-                <h2 id="achievement-title" class="title-lg" style="margin: 15px 0;">Title</h2>
-                <button id="btn-continue-game" class="btn btn-primary" onclick="continueGame()">Continue Building</button>
+            
+            <!-- Game HUD -->
+            <div id="game-hud" class="hidden">
+                <div class="hud-score">Score: <span id="hud-score-value">0</span></div>
+                <div class="hud-level">Level: <span id="hud-level-value">1</span></div>
             </div>
-            -->
+
+            <!-- Liquid Combo Timer & Label -->
+            <div id="combo-timer-container" class="hidden">
+                <div id="combo-timer-bar-wrapper">
+                    <div id="combo-timer-bar"></div>
+                </div>
+                <div id="combo-side-label"><span id="hud-combo-value">x1</span></div>
+            </div>
+
+            <!-- Tower Completed Screen -->
+            <div id="game-state-completed" class="game-overlay card hidden">
+                <h2 class="title-lg">Tower Completed!</h2>
+                <p class="body-md">You've added a new building to the skyline.</p>
+                <div class="score-summary">Bonus: <span id="tower-bonus">+500</span></div>
+                <button class="btn btn-primary" onclick="nextTower()">Build Next Tower</button>
+            </div>
+
+            <!-- Notifications / Effects Container -->
+            <div id="effects-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;"></div>
         </div>
     </div>
 

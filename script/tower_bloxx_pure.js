@@ -37,10 +37,87 @@ let checkInterval = null;
 
 // Dynamic Scaling Constants
 const isMobile = window.innerWidth < 600;
-let BLOCK_SIZE = isMobile ? 65 : 160;
-let ROPE_LEN = isMobile ? 192 : 390; 
+let BLOCK_SIZE = isMobile ? 50 : 120;
+let ROPE_LEN = isMobile ? 128 : 256; 
 const GROUND_Y_OFFSET = 80;
-const SWING_SPEED = 1.9; 
+
+// Game State Variables
+let gameState = 'PLAYING';
+let score = 0;
+let combo = 0;
+let comboTimer = 1.0;
+let level = 1;
+let towersCompleted = 0;
+let lives = 3;
+
+function setGameState(state) {
+    gameState = state;
+    document.querySelectorAll('.game-overlay').forEach(el => el.classList.add('hidden'));
+    
+    if (state === 'START') {
+        document.getElementById('game-state-start').classList.remove('hidden');
+        document.getElementById('game-hud').classList.add('hidden');
+    } else if (state === 'PLAYING') {
+        document.getElementById('game-hud').classList.remove('hidden');
+        updateHUD();
+    } else if (state === 'TOWER_COMPLETE') {
+        let bonus = 1000 + combo * 100;
+        score += bonus;
+        updateHUD();
+    } else if (state === 'GAME_OVER') {
+        // No popup appears; wait for user to click restart
+    }
+}
+
+function updateHUD() {
+    document.getElementById('hud-score-value').innerText = score;
+    const comboEl = document.getElementById('hud-combo-value');
+    const newComboText = 'x' + Math.max(1, combo);
+    if (comboEl.innerText !== newComboText) {
+        comboEl.innerText = newComboText;
+        comboEl.classList.remove('combo-bump');
+        void comboEl.offsetWidth; // trigger reflow
+        comboEl.classList.add('combo-bump');
+    }
+    document.getElementById('hud-level-value').innerText = level;
+    
+    const comboTimerContainer = document.getElementById('combo-timer-container');
+    const comboBar = document.getElementById('combo-timer-bar');
+    
+    if (combo > 0) {
+        if (comboTimerContainer) comboTimerContainer.classList.remove('hidden');
+        if (comboBar) {
+            comboBar.style.height = (comboTimer * 100) + '%';
+        }
+    } else {
+        if (comboTimerContainer) comboTimerContainer.classList.add('hidden');
+    }
+}
+
+function spawnFloatingText(text, x, y, className) {
+    const container = document.getElementById('effects-container');
+    if(!container) return;
+    const el = document.createElement('div');
+    el.className = `floating-text ${className}`;
+    el.innerText = text;
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+}
+
+function spawnSparkles(x, y, count) {
+    const container = document.getElementById('effects-container');
+    if(!container) return;
+    for(let i=0; i<count; i++) {
+        const el = document.createElement('div');
+        el.className = 'sparkle';
+        el.style.left = `${x + (Math.random()-0.5)*60}px`;
+        el.style.top = `${y + (Math.random()-0.5)*40}px`;
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 500);
+    }
+}
 
 // Assets
 const blockImages = {
@@ -104,6 +181,53 @@ function updateClouds() {
     }
 }
 
+// Flying People System
+let flyingPeople = [];
+function spawnFlyingPerson() {
+    let targetX = canvasWidth + 200;
+    let targetY = viewOffset + 100 + Math.random() * (canvasHeight - 200);
+    let hasTarget = false;
+    
+    if (placed.length > 1) {
+        let b = placed[Math.floor(Math.random() * (placed.length - 1)) + 1];
+        if (b) {
+            targetX = b.position.x + (Math.random() > 0.5 ? 60 : -60); // slight offset
+            targetY = b.position.y - (Math.random() * 40);
+            hasTarget = true;
+        }
+    }
+
+    flyingPeople.push({
+        x: -50,
+        y: viewOffset + 100 + Math.random() * (canvasHeight - 200),
+        speed: 1.5 + Math.random() * 1.5,
+        w: 30, h: 30,
+        targetX: targetX,
+        targetY: targetY,
+        hasTarget: hasTarget,
+        timeOffset: Math.random() * 1000
+    });
+}
+function updateFlyingPeople() {
+    if (Math.random() < 0.005 && gameState === 'PLAYING') spawnFlyingPerson();
+    flyingPeople.forEach(p => {
+        if (p.hasTarget) {
+            const dx = p.targetX - p.x;
+            const dy = p.targetY - p.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist > 40) {
+                p.x += (dx / dist) * p.speed;
+                p.y += (dy / dist) * p.speed;
+            } else {
+                p.x = canvasWidth + 200; // Disappear when arrived
+            }
+        } else {
+            p.x += p.speed;
+        }
+    });
+    flyingPeople = flyingPeople.filter(p => p.x < canvasWidth + 100);
+}
+
 function drawLabel(ctx, title, s) {
     if (!title) return;
     ctx.save();
@@ -136,10 +260,15 @@ function drawBlock(ctx, body, viewOffset, isRoof = false) {
   const s = BLOCK_SIZE;
   if (img && img.complete) {
     const ratio = img.naturalWidth / img.naturalHeight;
-    let drawW, drawH;
-    if (ratio > 1) { drawW = s; drawH = s / ratio; }
-    else { drawH = s; drawW = s * ratio; }
-    ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
+    const drawH = s;
+    const drawW = s * ratio;
+    
+    let visualYOffset = 0;
+    if (plugin.isBase && plugin.physH) {
+      visualYOffset = -(s - plugin.physH) / 2;
+    }
+
+    ctx.drawImage(img, -drawW / 2, -drawH / 2 + visualYOffset, drawW, drawH);
   } else {
     ctx.fillStyle = isRoof ? "#E11D48" : (plugin.achievement?.color ?? "#FEF3C7");
     ctx.fillRect(-s / 2, -s / 2, s, s);
@@ -237,9 +366,19 @@ function getStableTopY() {
     return canvasHeight - GROUND_Y_OFFSET;
 }
 
+let swingPhase = 0;
+let lastSwingTime = 0;
+
 function computeSwing(t) {
-  const ampl = (3 * Math.PI) / 10; 
-  const baseAngle = -Math.PI / 2 + ampl * Math.cos(SWING_SPEED * t);
+  let dt = t - lastSwingTime;
+  if (dt < 0 || dt > 1) dt = 0;
+  lastSwingTime = t;
+  
+  let currentSpeed = 1.9 + (level - 1) * 0.15;
+  swingPhase += currentSpeed * dt;
+
+  const ampl = (4 * Math.PI) / 10; 
+  const baseAngle = -Math.PI / 2 + ampl * Math.cos(swingPhase);
   const relX = ROPE_LEN * Math.cos(baseAngle);
   const relY = -ROPE_LEN * Math.sin(baseAngle); 
   return { relX, relY };
@@ -260,9 +399,11 @@ function spawnCraneBlock() {
           plugin: { achievement: ach, isRoof: true, swinging: true }, render: { visible: false }
       });
   } else {
-      currentBlock = Matter.Bodies.rectangle(px, py, BLOCK_SIZE, BLOCK_SIZE, {
+      let isBase = index === 0;
+      let physH = isBase ? BLOCK_SIZE - (BLOCK_SIZE * (15 / 74)) : BLOCK_SIZE;
+      currentBlock = Matter.Bodies.rectangle(px, py, BLOCK_SIZE, physH, {
           friction: 0.8, frictionStatic: 1.5, frictionAir: 0.01, restitution: 0, density: 0.01, chamfer: { radius: 2 }, label: "block",
-          plugin: { achievement: ach, swinging: true }, render: { visible: false }
+          plugin: { achievement: ach, swinging: true, isBase: isBase, physH: physH }, render: { visible: false }
       });
   }
   Matter.Composite.add(engine.world, currentBlock);
@@ -278,11 +419,22 @@ function initGame() {
         if (isTowerComplete) { if (ropeRetractionProgress > 0) ropeRetractionProgress -= 0.01; }
         else {
             const absoluteTopY = getAbsoluteTopY();
-            const minSpace = ROPE_LEN + (BLOCK_SIZE * 2.5); 
-            targetViewOffset = absoluteTopY - 50 - minSpace;
+            const minSpace = ROPE_LEN + (BLOCK_SIZE * 1.0); 
+            targetViewOffset = Math.min(absoluteTopY - 50 - minSpace, 0); // Clamp to 0 to keep ground at bottom
         }
         if (!isDragging) viewOffset += (targetViewOffset - viewOffset) * 0.05;
         updateClouds();
+        updateFlyingPeople();
+        
+        if (gameState === 'PLAYING' && combo > 0 && !isDropping) {
+            comboTimer -= 0.003;
+            if (comboTimer <= 0) {
+                comboTimer = 0;
+                combo = 0;
+            }
+            updateHUD();
+        }
+        
         if (currentBlock && currentBlock.plugin.swinging) {
           const t = (engine.timing.timestamp / 1000);
           const { relX, relY } = computeSwing(t);
@@ -318,9 +470,27 @@ function initGame() {
         ctx.fillStyle = "#0a0a0a";
         if (groundBody) ctx.fillRect(groundBody.position.x - canvasWidth * 0.35, groundBody.position.y - 15 - viewOffset, canvasWidth * 0.7, 30);
         drawCrane(ctx, canvasWidth, canvasWidth/2, viewOffset + 50, currentBlock ? currentBlock.position.x : canvasWidth/2, currentBlock ? currentBlock.position.y : viewOffset+50, viewOffset);
+        
+        // Draw Flying People (BEFORE blocks, so blocks are in front)
+        const personImg = IMAGES['person'] || (IMAGES['person'] = new Image(), IMAGES['person'].src = './src/images/flying-person.svg', IMAGES['person']);
+        if (personImg.complete) {
+            flyingPeople.forEach(p => {
+                ctx.drawImage(personImg, p.x, p.y - viewOffset, p.w, p.h);
+            });
+        }
+
+        // Draw blocks last so they are always brought to front
         Matter.Composite.allBodies(engine.world).forEach(body => {
           if (body.label === "block" || body.label === "roof") drawBlock(ctx, body, viewOffset, body.label === "roof");
         });
+        
+        // Glitter effect over tower if combo is active
+        if (combo > 0 && placed.length > 0) {
+            if (Math.random() < 0.1) {
+                const topBlock = placed[placed.length - 1];
+                spawnSparkles(topBlock.position.x, topBlock.position.y - viewOffset - BLOCK_SIZE/2, 1);
+            }
+        }
       });
   }
   groundBody = Matter.Bodies.rectangle(canvasWidth / 2, canvasHeight - GROUND_Y_OFFSET / 2, canvasWidth * 0.7, 30, {
@@ -334,22 +504,49 @@ function initGame() {
   Matter.Runner.run(runner, engine);
   spawnCraneBlock();
 
-  const startDrag = (y) => { if (isTowerComplete) { isDragging = true; lastY = y; gameContainer.style.cursor = 'grabbing'; } };
+  const startDrag = (y) => { if (isTowerComplete || gameState === 'TOWER_COMPLETE' || gameState === 'GAME_OVER') { isDragging = true; lastY = y; gameContainer.style.cursor = 'grabbing'; } };
   const moveDrag = (y) => { if (isDragging) { const dy = y - lastY; targetViewOffset -= dy; const topY = getStableTopY(); targetViewOffset = Math.max(topY - 200, Math.min(canvasHeight - GROUND_Y_OFFSET - canvasHeight + 100, targetViewOffset)); lastY = y; } };
   const endDrag = () => { isDragging = false; gameContainer.style.cursor = 'grab'; };
   gameContainer.onmousedown = (e) => startDrag(e.clientY);
+  
+  gameContainer.addEventListener('wheel', (e) => {
+      if (isTowerComplete || gameState === 'TOWER_COMPLETE' || gameState === 'GAME_OVER') {
+          targetViewOffset += e.deltaY;
+          const topY = getStableTopY();
+          targetViewOffset = Math.max(topY - 200, Math.min(canvasHeight - GROUND_Y_OFFSET - canvasHeight + 100, targetViewOffset));
+      }
+  });
+
   window.onmousemove = (e) => moveDrag(e.clientY);
   window.onmouseup = endDrag;
   gameContainer.ontouchstart = (e) => startDrag(e.touches[0].clientY);
   window.ontouchmove = (e) => { if(isDragging) e.preventDefault(); moveDrag(e.touches[0].clientY); };
   window.ontouchend = endDrag;
   const gameArea = document.getElementById("tower-game-container");
-  gameArea.onmousedown = (e) => { if(!isDragging) dropBlock(); };
-  gameArea.ontouchstart = (e) => { if(!isDragging) { e.preventDefault(); dropBlock(); } };
-  window.onkeydown = (e) => { if (e.code === "Space") dropBlock(); };
+  gameArea.style.touchAction = 'none'; // Eliminate mobile touch delay
+  gameArea.onmousedown = (e) => { if(!isDragging && gameState === 'PLAYING') dropBlock(); };
+  gameArea.ontouchstart = (e) => { if(!isDragging && gameState === 'PLAYING') { if(e.cancelable) e.preventDefault(); dropBlock(); } };
+  window.onkeydown = (e) => { if (e.code === "Space" && gameState === 'PLAYING') dropBlock(); };
+}
+
+window.startGame = function() {
+    if (!engine) initGame();
+    score = 0; combo = 0; comboTimer = 1.0; level = 1; towersCompleted = 0; lives = 3;
+    resetTower();
+    setGameState('PLAYING');
+}
+
+window.nextTower = function() {
+    towersCompleted++;
+    resetTower();
+    setGameState('PLAYING');
 }
 
 window.resetGame = function() {
+    window.startGame();
+};
+
+function resetTower() {
     if (!engine) return;
     Matter.Composite.clear(engine.world);
     placed = []; index = 0; viewOffset = 0; targetViewOffset = 0; isTowerComplete = false; ropeRetractionProgress = 1; isDropping = false; currentBlock = null;
@@ -361,7 +558,7 @@ window.resetGame = function() {
     const wallR = Matter.Bodies.rectangle(canvasWidth + 40, canvasHeight * 2, 80, canvasHeight * 8, { isStatic: true, render: { visible: false } });
     Matter.Composite.add(engine.world, [groundBody, wallL, wallR]);
     spawnCraneBlock();
-};
+}
 
 function retryBlock() {
   Matter.Composite.remove(engine.world, currentBlock);
@@ -369,7 +566,7 @@ function retryBlock() {
 }
 
 function dropBlock() {
-  if (isDropping || isTowerComplete || isDragging) return;
+  if (isDropping || isTowerComplete || isDragging || gameState !== 'PLAYING') return;
   if (!currentBlock) return;
   isDropping = true; currentBlock.plugin.swinging = false;
   Matter.Body.setVelocity(currentBlock, { x: 0, y: 8 }); 
@@ -380,23 +577,129 @@ function dropBlock() {
     if (!engine) return;
     const speed = Math.abs(currentBlock.velocity.x) + Math.abs(currentBlock.velocity.y) + Math.abs(currentBlock.angularVelocity) * 10;
     if (speed > 1) hasFallen = true;
-    if (currentBlock.position.y > canvasHeight - GROUND_Y_OFFSET + viewOffset + 500) { clearInterval(checkInterval); retryBlock(); return; }
+    
+    if (currentBlock.position.y > canvasHeight - GROUND_Y_OFFSET + viewOffset + 500) { 
+        clearInterval(checkInterval); 
+        combo = 0; updateHUD(); lives--;
+        if(lives <= 0) setGameState('GAME_OVER');
+        else retryBlock(); 
+        return; 
+    }
+    
     if (speed < 0.5 && hasFallen) {
       settledCount++; if (settledCount < 3) return;
       clearInterval(checkInterval);
       const horizontalCenter = canvasWidth / 2;
       const stableBlocks = placed.filter(b => { return Math.abs(b.position.x - horizontalCenter) < BLOCK_SIZE * 1.5 && Math.abs(b.angle) < 0.5; });
       const lastStable = stableBlocks[stableBlocks.length - 1];
-      if (lastStable && Math.abs(currentBlock.position.x - lastStable.position.x) > BLOCK_SIZE * 0.9) { retryBlock(); return; }
+      
+      let isMiss = false;
+      if (lastStable && Math.abs(currentBlock.position.x - lastStable.position.x) > BLOCK_SIZE * 0.9) { 
+          isMiss = true;
+      }
+      
+      if (isMiss) {
+          combo = 0; updateHUD(); lives--;
+          spawnFloatingText("Miss!", currentBlock.position.x, currentBlock.position.y - viewOffset, "bad-text");
+          if(lives <= 0) setGameState('GAME_OVER');
+          else retryBlock();
+          return;
+      }
+
+      // Calculate accuracy
+      let diff = lastStable ? Math.abs(currentBlock.position.x - lastStable.position.x) : Math.abs(currentBlock.position.x - horizontalCenter);
+      let accuracy = "Good";
+      let points = 50;
+      let textClass = "good-text";
+      
+      if (diff < BLOCK_SIZE * 0.1) {
+          accuracy = "Perfect"; points = 100; textClass = "perfect-text";
+          spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 5);
+      } else if (diff < BLOCK_SIZE * 0.25) {
+          accuracy = "Great"; points = 75; textClass = "great-text";
+          spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 2);
+      } else if (diff < BLOCK_SIZE * 0.6) {
+          accuracy = "Good"; points = 50; textClass = "good-text";
+      } else {
+          accuracy = "Bad"; points = 20; textClass = "bad-text";
+          combo = 0;
+      }
+      
+      if (accuracy === "Perfect" || accuracy === "Great") {
+          combo++;
+          comboTimer = 1.0;
+      }
+      
+      score += points * Math.max(1, combo);
+      level = Math.floor(score / 1000) + 1;
+      updateHUD();
+      
+      spawnFloatingText(accuracy, currentBlock.position.x, currentBlock.position.y - viewOffset - BLOCK_SIZE/2, textClass);
+
+      // Flying People Bonus
+      if (accuracy !== "Bad" && accuracy !== "Miss") {
+          let residentsMovedIn = false;
+          flyingPeople.forEach(p => {
+              const dx = p.x - currentBlock.position.x;
+              const dy = p.y - currentBlock.position.y;
+              if (Math.sqrt(dx*dx + dy*dy) < BLOCK_SIZE * 1.5) {
+                  score += 200;
+                  residentsMovedIn = true;
+                  p.x = canvasWidth + 200; // remove
+              }
+          });
+          if (residentsMovedIn) {
+              spawnFloatingText("Residents Moved In! +200", currentBlock.position.x, currentBlock.position.y - viewOffset - BLOCK_SIZE, "great-text");
+              updateHUD();
+          }
+      }
+
       placed.push(currentBlock); index += 1;
-      if (currentBlock.plugin.isRoof) isTowerComplete = true;
-      else setTimeout(() => { if (!engine) return; spawnCraneBlock(); }, 300);
+      
+      if (currentBlock.plugin.isRoof) {
+          isTowerComplete = true;
+          setTimeout(() => setGameState('TOWER_COMPLETE'), 1000);
+      } else {
+          setTimeout(() => { if (!engine) return; spawnCraneBlock(); }, 300);
+      }
     } else settledCount = 0;
   }, 60);
 }
 
-window.openTowerGame = function() {
+window.openTowerGame = function(diamondElement) {
+  if (diamondElement) {
+      const rect = diamondElement.getBoundingClientRect();
+      const img = diamondElement.querySelector('img') || diamondElement;
+      
+      const clone = document.createElement('img');
+      clone.src = img.src || './src/images/diamong.svg';
+      clone.className = 'diamond-transition';
+      clone.style.left = rect.left + 'px';
+      clone.style.top = rect.top + 'px';
+      clone.style.width = rect.width + 'px';
+      clone.style.height = rect.height + 'px';
+      clone.style.filter = 'none'; // remove grayscale
+      document.body.appendChild(clone);
+      
+      // Force reflow
+      void clone.offsetWidth;
+      
+      clone.style.transform = 'scale(200)';
+      
+      setTimeout(() => {
+          document.getElementById("tower-bloxx-modal").classList.remove("hidden");
+          if(!engine) initGame();
+          startGame();
+          clone.remove();
+      }, 700);
+      return;
+  }
+
   document.getElementById("tower-bloxx-modal").classList.remove("hidden");
   if(!engine) initGame();
+  startGame();
 }
-window.closeTowerGame = function() { document.getElementById("tower-bloxx-modal").classList.add("hidden"); }
+window.closeTowerGame = function() { 
+  document.getElementById("tower-bloxx-modal").classList.add("hidden"); 
+  if (checkInterval) clearInterval(checkInterval);
+}
