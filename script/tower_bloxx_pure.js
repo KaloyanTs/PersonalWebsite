@@ -34,10 +34,12 @@ let lastY = 0;
 let canvasWidth, canvasHeight;
 let gameContainer = null;
 let checkInterval = null;
+let BASE_SIZE = 0;
 
 // Dynamic Scaling Constants
 const isMobile = window.innerWidth < 600;
 let BLOCK_SIZE = isMobile ? 50 : 120;
+let BLOCK_WIDTH = isMobile ? 50 : 120 * 0.7;
 let ROPE_LEN = isMobile ? 128 : 256; 
 const GROUND_Y_OFFSET = 80;
 
@@ -183,6 +185,8 @@ function updateClouds() {
 
 // Flying People System
 let flyingPeople = [];
+let fallingPeopleOut = [];
+
 function spawnFlyingPerson() {
     let targetX = canvasWidth + 200;
     let targetY = viewOffset + 100 + Math.random() * (canvasHeight - 200);
@@ -197,6 +201,8 @@ function spawnFlyingPerson() {
         }
     }
 
+    const names = ["Kaloyan", "Seri", "Radoslav", "Skeleta", "Stefan", "Jakub", "Nikola"];
+    
     flyingPeople.push({
         x: -50,
         y: viewOffset + 100 + Math.random() * (canvasHeight - 200),
@@ -205,7 +211,8 @@ function spawnFlyingPerson() {
         targetX: targetX,
         targetY: targetY,
         hasTarget: hasTarget,
-        timeOffset: Math.random() * 1000
+        timeOffset: Math.random() * 1000,
+        name: names[Math.floor(Math.random() * names.length)]
     });
 }
 function updateFlyingPeople() {
@@ -226,6 +233,14 @@ function updateFlyingPeople() {
         }
     });
     flyingPeople = flyingPeople.filter(p => p.x < canvasWidth + 100);
+
+    fallingPeopleOut.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.2; // gravity
+        p.rotation = (p.rotation || 0) + p.vr;
+    });
+    fallingPeopleOut = fallingPeopleOut.filter(p => p.y < canvasHeight + 200 && p.y > viewOffset - 200 && (!groundBody || p.y < groundBody.position.y));
 }
 
 function drawLabel(ctx, title, s) {
@@ -257,23 +272,26 @@ function drawBlock(ctx, body, viewOffset, isRoof = false) {
   ctx.save();
   ctx.translate(position.x, position.y - viewOffset);
   ctx.rotate(angle);
-  const s = BLOCK_SIZE;
+  const targetSize = plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+
   if (img && img.complete) {
     const ratio = img.naturalWidth / img.naturalHeight;
-    const drawH = s;
-    const drawW = s * ratio;
+    const drawH = targetSize;
+    const drawW = targetSize * ratio;
     
     let visualYOffset = 0;
     if (plugin.isBase && plugin.physH) {
-      visualYOffset = -(s - plugin.physH) / 2;
+      // Shift visual representation up so its visual bottom matches the physics body bottom, 
+      // but because we shrank the physH the top edge of the physics body is lower than visually!
+      visualYOffset = -(targetSize - plugin.physH) / 2;
     }
 
     ctx.drawImage(img, -drawW / 2, -drawH / 2 + visualYOffset, drawW, drawH);
   } else {
     ctx.fillStyle = isRoof ? "#E11D48" : (plugin.achievement?.color ?? "#FEF3C7");
-    ctx.fillRect(-s / 2, -s / 2, s, s);
+    ctx.fillRect(-targetSize / 2, -targetSize / 2, targetSize, targetSize);
   }
-  drawLabel(ctx, plugin.achievement?.title, s);
+  drawLabel(ctx, plugin.achievement?.title, targetSize);
   ctx.restore();
 }
 
@@ -331,7 +349,8 @@ function drawCrane(ctx, w, pivotX, pivotY, blockX, blockY, viewOffset) {
     let targetY, targetX;
     if (currentBlock && currentBlock.plugin.swinging) {
         targetX = blockX;
-        targetY = blockY - viewOffset - (BLOCK_SIZE / 2);
+        const targetSize = currentBlock.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+        targetY = blockY - viewOffset - (targetSize / 2);
     } else {
         targetX = pivotX;
         targetY = py + currentRopeLen;
@@ -349,7 +368,10 @@ function getAbsoluteTopY() {
         (b.label === "block" || b.label === "roof") && !b.plugin.swinging
     );
     if (droppedBlocks.length > 0) {
-        return Math.min(...droppedBlocks.map((b) => b.position.y - BLOCK_SIZE / 2));
+        return Math.min(...droppedBlocks.map((b) => {
+            const targetSize = b.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+            return b.position.y - targetSize / 2;
+        }));
     }
     return canvasHeight - GROUND_Y_OFFSET;
 }
@@ -357,12 +379,15 @@ function getAbsoluteTopY() {
 function getStableTopY() {
     const horizontalCenter = canvasWidth / 2;
     const tiltThreshold = 0.5; 
-    const distThreshold = BLOCK_SIZE * 1.5;
+    const distThreshold = BASE_SIZE * 1.5;
     const stableBlocks = placed.filter(b => {
         const distFromCenter = Math.abs(b.position.x - horizontalCenter);
         return distFromCenter < distThreshold && Math.abs(b.angle) < tiltThreshold;
     });
-    if (stableBlocks.length > 0) return Math.min(...stableBlocks.map((b) => b.position.y - BLOCK_SIZE / 2));
+    if (stableBlocks.length > 0) return Math.min(...stableBlocks.map((b) => {
+        const targetSize = b.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+        return b.position.y - targetSize / 2;
+    }));
     return canvasHeight - GROUND_Y_OFFSET;
 }
 
@@ -393,15 +418,18 @@ function spawnCraneBlock() {
   const py = viewOffset + 50 + relY;
 
   if (isRoof) {
-      const half = BLOCK_SIZE / 2;
+      const half = BLOCK_WIDTH / 2;
       currentBlock = Matter.Bodies.fromVertices(px, py, [[{ x: -half, y: half }, { x: half, y: half }, { x: 0, y: -half }]], {
           friction: 0.8, frictionStatic: 1.5, frictionAir: 0.01, restitution: 0, density: 0.01, label: "roof",
           plugin: { achievement: ach, isRoof: true, swinging: true }, render: { visible: false }
       });
   } else {
       let isBase = index === 0;
-      let physH = isBase ? BLOCK_SIZE - (BLOCK_SIZE * (15 / 74)) : BLOCK_SIZE;
-      currentBlock = Matter.Bodies.rectangle(px, py, BLOCK_SIZE, physH, {
+      // Normal physics height, but for the base we reduce it so the next block rests lower inside it
+      let effectiveSize = isBase ? BASE_SIZE : BLOCK_WIDTH;
+      let physH = isBase ? effectiveSize - (effectiveSize * (15 / 74)) : BLOCK_WIDTH;
+      let physW = effectiveSize;
+      currentBlock = Matter.Bodies.rectangle(px, py, physW, physH, {
           friction: 0.8, frictionStatic: 1.5, frictionAir: 0.01, restitution: 0, density: 0.01, chamfer: { radius: 2 }, label: "block",
           plugin: { achievement: ach, swinging: true, isBase: isBase, physH: physH }, render: { visible: false }
       });
@@ -419,12 +447,32 @@ function initGame() {
         if (isTowerComplete) { if (ropeRetractionProgress > 0) ropeRetractionProgress -= 0.01; }
         else {
             const absoluteTopY = getAbsoluteTopY();
-            const minSpace = ROPE_LEN + (BLOCK_SIZE * 1.0); 
+            const minSpace = ROPE_LEN + (BASE_SIZE * 1.0); 
             targetViewOffset = Math.min(absoluteTopY - 50 - minSpace, 0); // Clamp to 0 to keep ground at bottom
         }
         if (!isDragging) viewOffset += (targetViewOffset - viewOffset) * 0.05;
         updateClouds();
         updateFlyingPeople();
+
+        Matter.Composite.allBodies(engine.world).forEach(b => {
+          if ((b.label === "block" || b.label === "roof") && !b.plugin.swinging && b.plugin.residents > 0) {
+              const isTipping = Math.abs(b.angularVelocity) > 0.1 || Math.abs(b.angle) > 0.6 || b.velocity.y > 4 || Math.abs(b.velocity.x) > 2.5;
+              if (isTipping) {
+                  let numToSpawn = b.plugin.residents;
+                  b.plugin.residents = 0; // they are released
+                  for (let i = 0; i < numToSpawn; i++) {
+                      fallingPeopleOut.push({
+                          x: b.position.x + (Math.random() - 0.5) * 50,
+                          y: b.position.y + (Math.random() - 0.5) * 50,
+                          vx: (Math.random() - 0.5) * 8,
+                          vy: -Math.random() * 6 - 2, // jump out initially
+                          vr: (Math.random() - 0.5) * 0.5,
+                          w: 30, h: 30
+                      });
+                  }
+              }
+          }
+        });
         
         if (gameState === 'PLAYING' && combo > 0 && !isDropping) {
             comboTimer -= 0.003;
@@ -450,6 +498,8 @@ function initGame() {
   canvasWidth = gameContainer.clientWidth;
   canvasHeight = gameContainer.clientHeight;
   BLOCK_SIZE = canvasWidth < 600 ? 65 : 160;
+  BLOCK_WIDTH = canvasWidth < 600 ? BLOCK_SIZE : BLOCK_SIZE * 0.7;
+  BASE_SIZE = BLOCK_WIDTH * 0.85;
   ROPE_LEN = canvasWidth < 600 ? 192 : 390;
 
   if (!render) {
@@ -476,19 +526,55 @@ function initGame() {
         if (personImg.complete) {
             flyingPeople.forEach(p => {
                 ctx.drawImage(personImg, p.x, p.y - viewOffset, p.w, p.h);
+                if (p.name) {
+                    ctx.save();
+                    ctx.font = "bold 10px 'Manrope', sans-serif";
+                    const tw = ctx.measureText(p.name).width;
+                    const pad = 4;
+                    const lh = 12;
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                    ctx.beginPath();
+                    ctx.roundRect(p.x + p.w / 2 - tw / 2 - pad, p.y - viewOffset - 18, tw + pad * 2, lh, 4);
+                    ctx.fill();
+                    ctx.fillStyle = "#000";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(p.name, p.x + p.w / 2, p.y - viewOffset - 12);
+                    ctx.restore();
+                }
+            });
+            fallingPeopleOut.forEach(p => {
+                ctx.save();
+                ctx.translate(p.x, p.y - viewOffset);
+                ctx.rotate(p.rotation || 0);
+                ctx.drawImage(personImg, -p.w/2, -p.h/2, p.w, p.h);
+                ctx.restore();
             });
         }
 
         // Draw blocks last so they are always brought to front
+        let baseBody = null;
         Matter.Composite.allBodies(engine.world).forEach(body => {
-          if (body.label === "block" || body.label === "roof") drawBlock(ctx, body, viewOffset, body.label === "roof");
+          if (body.label === "block" || body.label === "roof") {
+              if (body.plugin && body.plugin.isBase) {
+                  baseBody = body;
+              } else {
+                  drawBlock(ctx, body, viewOffset, body.label === "roof");
+              }
+          }
         });
+        
+        // draw the base block very last (so it renders in front via z-index)
+        if (baseBody) {
+            drawBlock(ctx, baseBody, viewOffset, false);
+        }
         
         // Glitter effect over tower if combo is active
         if (combo > 0 && placed.length > 0) {
             if (Math.random() < 0.1) {
                 const topBlock = placed[placed.length - 1];
-                spawnSparkles(topBlock.position.x, topBlock.position.y - viewOffset - BLOCK_SIZE/2, 1);
+                const targetSize = topBlock.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+                spawnSparkles(topBlock.position.x, topBlock.position.y - viewOffset - targetSize/2, 1);
             }
         }
       });
@@ -549,7 +635,7 @@ window.resetGame = function() {
 function resetTower() {
     if (!engine) return;
     Matter.Composite.clear(engine.world);
-    placed = []; index = 0; viewOffset = 0; targetViewOffset = 0; isTowerComplete = false; ropeRetractionProgress = 1; isDropping = false; currentBlock = null;
+    placed = []; fallingPeopleOut = []; index = 0; viewOffset = 0; targetViewOffset = 0; isTowerComplete = false; ropeRetractionProgress = 1; isDropping = false; currentBlock = null;
     if (checkInterval) clearInterval(checkInterval);
     groundBody = Matter.Bodies.rectangle(canvasWidth / 2, canvasHeight - GROUND_Y_OFFSET / 2, canvasWidth * 0.7, 30, {
         isStatic: true, label: "ground", friction: 0.8, frictionStatic: 1.5, chamfer: { radius: 4 }, render: { visible: false }
@@ -590,11 +676,12 @@ function dropBlock() {
       settledCount++; if (settledCount < 3) return;
       clearInterval(checkInterval);
       const horizontalCenter = canvasWidth / 2;
-      const stableBlocks = placed.filter(b => { return Math.abs(b.position.x - horizontalCenter) < BLOCK_SIZE * 1.5 && Math.abs(b.angle) < 0.5; });
+      const stableBlocks = placed.filter(b => { return Math.abs(b.position.x - horizontalCenter) < BLOCK_WIDTH * 1.5 && Math.abs(b.angle) < 0.5; });
       const lastStable = stableBlocks[stableBlocks.length - 1];
       
       let isMiss = false;
-      if (lastStable && Math.abs(currentBlock.position.x - lastStable.position.x) > BLOCK_SIZE * 0.9) { 
+      let referenceWidth = lastStable && lastStable.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+      if (lastStable && Math.abs(currentBlock.position.x - lastStable.position.x) > referenceWidth * 0.9) { 
           isMiss = true;
       }
       
@@ -612,13 +699,13 @@ function dropBlock() {
       let points = 50;
       let textClass = "good-text";
       
-      if (diff < BLOCK_SIZE * 0.1) {
+      if (diff < BLOCK_WIDTH * 0.1) {
           accuracy = "Perfect"; points = 100; textClass = "perfect-text";
           spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 5);
-      } else if (diff < BLOCK_SIZE * 0.25) {
+      } else if (diff < BLOCK_WIDTH * 0.25) {
           accuracy = "Great"; points = 75; textClass = "great-text";
           spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 2);
-      } else if (diff < BLOCK_SIZE * 0.6) {
+      } else if (diff < BLOCK_WIDTH * 0.6) {
           accuracy = "Good"; points = 50; textClass = "good-text";
       } else {
           accuracy = "Bad"; points = 20; textClass = "bad-text";
@@ -634,22 +721,24 @@ function dropBlock() {
       level = Math.floor(score / 1000) + 1;
       updateHUD();
       
-      spawnFloatingText(accuracy, currentBlock.position.x, currentBlock.position.y - viewOffset - BLOCK_SIZE/2, textClass);
+      const currentTargetSize = currentBlock.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
+      spawnFloatingText(accuracy, currentBlock.position.x, currentBlock.position.y - viewOffset - currentTargetSize/2, textClass);
 
       // Flying People Bonus
       if (accuracy !== "Bad" && accuracy !== "Miss") {
-          let residentsMovedIn = false;
+          let residentsAdded = 0;
           flyingPeople.forEach(p => {
               const dx = p.x - currentBlock.position.x;
               const dy = p.y - currentBlock.position.y;
-              if (Math.sqrt(dx*dx + dy*dy) < BLOCK_SIZE * 1.5) {
+              if (Math.sqrt(dx*dx + dy*dy) < currentTargetSize * 1.5) {
                   score += 200;
-                  residentsMovedIn = true;
+                  residentsAdded += 1;
                   p.x = canvasWidth + 200; // remove
               }
           });
-          if (residentsMovedIn) {
-              spawnFloatingText("Residents Moved In! +200", currentBlock.position.x, currentBlock.position.y - viewOffset - BLOCK_SIZE, "great-text");
+          if (residentsAdded > 0) {
+              currentBlock.plugin.residents = (currentBlock.plugin.residents || 0) + residentsAdded;
+              spawnFloatingText("Residents Moved In! +200", currentBlock.position.x, currentBlock.position.y - viewOffset - currentTargetSize, "great-text");
               updateHUD();
           }
       }
