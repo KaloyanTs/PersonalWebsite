@@ -63,8 +63,12 @@ function setGameState(state) {
         document.getElementById('game-hud').classList.remove('hidden');
         updateHUD();
     } else if (state === 'TOWER_COMPLETE') {
-        let bonus = 1000 + combo * 100;
+        let bonus = 10 + combo * 5;
         score += bonus;
+        const bonusEl = document.getElementById('tower-bonus');
+        if (bonusEl) bonusEl.innerText = '+' + bonus + ' Residents';
+        const completeEl = document.getElementById('game-state-completed');
+        if (completeEl) completeEl.classList.remove('hidden');
         updateHUD();
     } else if (state === 'GAME_OVER') {
         // No popup appears; wait for user to click restart
@@ -187,13 +191,37 @@ function updateClouds() {
 let flyingPeople = [];
 let fallingPeopleOut = [];
 
+function spawnFlyingPeopleForBlock(block, count) {
+    const names = ["Kaloyan", "Seri", "Radoslav", "Skeleta", "Stefan", "Jakub", "Nikola", "Alice", "Bob"];
+    for (let i = 0; i < count; i++) {
+        let side = Math.random() > 0.5 ? -100 : canvasWidth + 100;
+        let pY = viewOffset - 100 + Math.random() * 300;
+        flyingPeople.push({
+            x: side,
+            y: pY,
+            speed: 5 + Math.random() * 3,
+            w: 30, h: 30,
+            targetX: block.position.x,
+            targetY: block.position.y,
+            hasTarget: true,
+            targetBlock: block,
+            timeOffset: Math.random() * 1000,
+            name: names[Math.floor(Math.random() * names.length)]
+        });
+    }
+}
+
 function spawnFlyingPerson() {
     let targetX = canvasWidth + 200;
     let targetY = viewOffset + 100 + Math.random() * (canvasHeight - 200);
     let hasTarget = false;
     
-    if (placed.length > 1) {
-        let b = placed[Math.floor(Math.random() * (placed.length - 1)) + 1];
+    const stableBlocks = placed.filter(b => { 
+        return Math.abs(b.position.x - canvasWidth / 2) < (b.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH) * 1.5 && Math.abs(b.angle) < 0.5; 
+    });
+
+    if (stableBlocks.length > 1) {
+        let b = stableBlocks[Math.floor(Math.random() * (stableBlocks.length - 1)) + 1];
         if (b) {
             targetX = b.position.x + (Math.random() > 0.5 ? 60 : -60); // slight offset
             targetY = b.position.y - (Math.random() * 40);
@@ -211,6 +239,7 @@ function spawnFlyingPerson() {
         targetX: targetX,
         targetY: targetY,
         hasTarget: hasTarget,
+        targetBlock: null,
         timeOffset: Math.random() * 1000,
         name: names[Math.floor(Math.random() * names.length)]
     });
@@ -219,20 +248,41 @@ function updateFlyingPeople() {
     if (Math.random() < 0.005 && gameState === 'PLAYING') spawnFlyingPerson();
     flyingPeople.forEach(p => {
         if (p.hasTarget) {
-            const dx = p.targetX - p.x;
-            const dy = p.targetY - p.y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            if (dist > 40) {
-                p.x += (dx / dist) * p.speed;
-                p.y += (dy / dist) * p.speed;
-            } else {
-                p.x = canvasWidth + 200; // Disappear when arrived
+            // Check if target block has tipped/fallen
+            if (p.targetBlock) {
+                const b = p.targetBlock;
+                const isTipping = Math.abs(b.angularVelocity) > 0.1 || Math.abs(b.angle) > 0.6 || b.velocity.y > 4 || Math.abs(b.velocity.x) > 2.5;
+                if (isTipping) {
+                    p.hasTarget = false;
+                    p.targetBlock = null;
+                } else {
+                    p.targetX = b.position.x;
+                    p.targetY = b.position.y;
+                }
             }
-        } else {
+            if (p.hasTarget) {
+                const dx = p.targetX - p.x;
+                const dy = p.targetY - p.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist > 25) {
+                    p.x += (dx / dist) * p.speed;
+                    p.y += (dy / dist) * p.speed;
+                } else {
+                    p.arrived = true;
+                    if (p.targetBlock) {
+                        p.targetBlock.plugin.residents = (p.targetBlock.plugin.residents || 0) + 1;
+                        score += 1;
+                        updateHUD();
+                    }
+                }
+            }
+        }
+        
+        if (!p.hasTarget) {
             p.x += p.speed;
         }
     });
-    flyingPeople = flyingPeople.filter(p => p.x < canvasWidth + 100);
+    flyingPeople = flyingPeople.filter(p => p.x < canvasWidth + 100 && !p.arrived);
 
     fallingPeopleOut.forEach(p => {
         p.x += p.vx;
@@ -455,20 +505,39 @@ function initGame() {
         updateFlyingPeople();
 
         Matter.Composite.allBodies(engine.world).forEach(b => {
-          if ((b.label === "block" || b.label === "roof") && !b.plugin.swinging && b.plugin.residents > 0) {
+          // Remove fallen bodies to prevent Matter.js broadphase from exploding and causing freezes
+          if (b.position.y > canvasHeight + 2000) {
+              Matter.Composite.remove(engine.world, b);
+              placed = placed.filter(placedBlock => placedBlock !== b);
+              return;
+          }
+
+          if ((b.label === "block" || b.label === "roof") && !b.plugin.swinging && b !== currentBlock) {
               const isTipping = Math.abs(b.angularVelocity) > 0.1 || Math.abs(b.angle) > 0.6 || b.velocity.y > 4 || Math.abs(b.velocity.x) > 2.5;
               if (isTipping) {
-                  let numToSpawn = b.plugin.residents;
-                  b.plugin.residents = 0; // they are released
-                  for (let i = 0; i < numToSpawn; i++) {
-                      fallingPeopleOut.push({
-                          x: b.position.x + (Math.random() - 0.5) * 50,
-                          y: b.position.y + (Math.random() - 0.5) * 50,
-                          vx: (Math.random() - 0.5) * 8,
-                          vy: -Math.random() * 6 - 2, // jump out initially
-                          vr: (Math.random() - 0.5) * 0.5,
-                          w: 30, h: 30
+                  // Apply artificial force to make sure falling blocks don't get stuck on the tower
+                  if (Math.abs(b.velocity.x) < 1) {
+                      Matter.Body.applyForce(b, b.position, { 
+                          x: (b.position.x > canvasWidth / 2 ? 0.05 : -0.05) * b.mass, 
+                          y: 0 
                       });
+                  }
+                  
+                  if (b.plugin.residents > 0) {
+                      let numToSpawn = b.plugin.residents;
+                      b.plugin.residents = 0; // they are released
+                      score = Math.max(0, score - numToSpawn);
+                      updateHUD();
+                      for (let i = 0; i < numToSpawn; i++) {
+                          fallingPeopleOut.push({
+                              x: b.position.x + (Math.random() - 0.5) * 50,
+                              y: b.position.y + (Math.random() - 0.5) * 50,
+                              vx: (Math.random() - 0.5) * 8,
+                              vy: -Math.random() * 6 - 2, // jump out initially
+                              vr: (Math.random() - 0.5) * 0.5,
+                              w: 30, h: 30
+                          });
+                      }
                   }
               }
           }
@@ -696,19 +765,18 @@ function dropBlock() {
       // Calculate accuracy
       let diff = lastStable ? Math.abs(currentBlock.position.x - lastStable.position.x) : Math.abs(currentBlock.position.x - horizontalCenter);
       let accuracy = "Good";
-      let points = 50;
       let textClass = "good-text";
       
       if (diff < BLOCK_WIDTH * 0.1) {
-          accuracy = "Perfect"; points = 100; textClass = "perfect-text";
+          accuracy = "Perfect"; textClass = "perfect-text";
           spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 5);
       } else if (diff < BLOCK_WIDTH * 0.25) {
-          accuracy = "Great"; points = 75; textClass = "great-text";
+          accuracy = "Great"; textClass = "great-text";
           spawnSparkles(currentBlock.position.x, currentBlock.position.y - viewOffset, 2);
       } else if (diff < BLOCK_WIDTH * 0.6) {
-          accuracy = "Good"; points = 50; textClass = "good-text";
+          accuracy = "Good"; textClass = "good-text";
       } else {
-          accuracy = "Bad"; points = 20; textClass = "bad-text";
+          accuracy = "Bad"; textClass = "bad-text";
           combo = 0;
       }
       
@@ -717,31 +785,21 @@ function dropBlock() {
           comboTimer = 1.0;
       }
       
-      score += points * Math.max(1, combo);
-      level = Math.floor(score / 1000) + 1;
+      let baseResidents = 0;
+      if (accuracy === "Perfect") baseResidents = 5;
+      else if (accuracy === "Great") baseResidents = 3;
+      else if (accuracy === "Good") baseResidents = 1;
+
+      let residentsToSpawn = baseResidents * Math.max(1, combo);
+      if (residentsToSpawn > 0) {
+          spawnFlyingPeopleForBlock(currentBlock, residentsToSpawn);
+      }
+      
+      level = Math.floor(score / 50) + 1;
       updateHUD();
       
       const currentTargetSize = currentBlock.plugin.isBase ? BASE_SIZE : BLOCK_WIDTH;
       spawnFloatingText(accuracy, currentBlock.position.x, currentBlock.position.y - viewOffset - currentTargetSize/2, textClass);
-
-      // Flying People Bonus
-      if (accuracy !== "Bad" && accuracy !== "Miss") {
-          let residentsAdded = 0;
-          flyingPeople.forEach(p => {
-              const dx = p.x - currentBlock.position.x;
-              const dy = p.y - currentBlock.position.y;
-              if (Math.sqrt(dx*dx + dy*dy) < currentTargetSize * 1.5) {
-                  score += 200;
-                  residentsAdded += 1;
-                  p.x = canvasWidth + 200; // remove
-              }
-          });
-          if (residentsAdded > 0) {
-              currentBlock.plugin.residents = (currentBlock.plugin.residents || 0) + residentsAdded;
-              spawnFloatingText("Residents Moved In! +200", currentBlock.position.x, currentBlock.position.y - viewOffset - currentTargetSize, "great-text");
-              updateHUD();
-          }
-      }
 
       placed.push(currentBlock); index += 1;
       
