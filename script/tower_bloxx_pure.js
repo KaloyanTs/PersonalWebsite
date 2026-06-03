@@ -813,6 +813,12 @@ function dropBlock() {
   }, 60);
 }
 
+window.hideCompletedPopup = function() {
+    const popup = document.getElementById('game-state-completed');
+    if (popup) popup.classList.add('hidden');
+    // Keep game state as is (TOWER_COMPLETE) so they can drag up/down
+}
+
 window.openTowerGame = function(diamondElement) {
   if (diamondElement) {
       const rect = diamondElement.getBoundingClientRect();

@@ -237,11 +237,11 @@
             </div>
 
             <!-- Tower Completed Screen -->
-            <div id="game-state-completed" class="game-overlay card hidden">
-                <h2 class="title-lg">Tower Completed!</h2>
-                <p class="body-md">You've added a new building to the skyline.</p>
+            <div id="game-state-completed" class="game-overlay hidden">
+                <button class="close-popup-btn" onclick="hideCompletedPopup()" title="Close to view tower">&times;</button>
+                <h2 class="title-lg" style="margin-top: 0;">Tower Completed!</h2>
                 <div class="score-summary">Bonus: <span id="tower-bonus">+500</span></div>
-                <button class="btn btn-primary" onclick="nextTower()">Build Next Tower</button>
+                <button class="btn btn-primary" onclick="nextTower()" style="margin-top: 15px; padding: 0.5rem 1rem; font-size: 0.85rem;">Build Next</button>
             </div>
 
             <!-- Notifications / Effects Container -->
