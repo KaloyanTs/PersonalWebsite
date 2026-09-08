@@ -1,257 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="<b>Kaloyan Tsvetkov</b> — Doctoral Researcher & Digital Curator." />
     <title>Kaloyan Tsvetkov</title>
-    
-    <!-- Google Fonts: Newsreader (Serif) & Manrope (Sans-Serif) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
-    
-    <!-- Favicon -->
     <link rel="icon" href="./src/images/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon" />
-
-    <!-- Font Awesome (Legacy support) - Loaded asynchronously -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></noscript>
-    
-    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/portfolio.css">
     <link rel="stylesheet" href="style/sketch.css">
 </head>
-
 <body>
-    <script data-goatcounter="https://kaloyants.goatcounter.com/count"
-        async src="https://gc.zgo.at/count.js"></script>
-    <!-- Navigation: Floating Glass -->
-    <nav class="glass-nav">
+    <div class="pastel-field" aria-hidden="true">
+        <span class="pastel-shape pastel-shape-a"></span><span class="pastel-shape pastel-shape-b"></span>
+        <span class="pastel-shape pastel-shape-c"></span><span class="pastel-shape pastel-shape-d"></span>
+        <span class="pastel-shape pastel-shape-e"></span><span class="pastel-shape pastel-shape-f"></span>
+        <span class="pastel-shape pastel-shape-g"></span><span class="pastel-shape pastel-shape-h"></span>
+        <span class="pastel-shape pastel-shape-i"></span><span class="pastel-shape pastel-shape-j"></span>
+    </div>
+
+    <nav class="glass-nav" aria-label="Primary">
         <div class="nav-content">
-            <a href="#" class="logo text-display">Kaloyan.</a>
-            <ul class="nav-links">
-                <li><a href="#about" class="text-label">About</a></li>
-                <li><a href="#experience" class="text-label">Experience</a></li>
-                <li><a href="#publications" class="text-label">Publications</a></li>
-                <li><a href="#notes" class="text-label">Notes</a></li>
-                <li><a href="#contact" class="text-label">Contact</a></li>
+            <a href="#" class="logo text-display" data-section-link="about">Kaloyan.</a>
+            <span class="mobile-active-section text-label" aria-hidden="true">About</span>
+            <button class="mobile-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-links">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+            </button>
+            <ul class="nav-links" id="primary-links">
+                <li><a href="#about" class="text-label is-active" data-section-link="about" aria-current="page">About</a></li>
+                <li><a href="#experience" class="text-label" data-section-link="experience">Experience</a></li>
+                <li><a href="#publications" class="text-label" data-section-link="publications">Publications</a></li>
+                <li><a href="#notes" class="text-label" data-section-link="notes">Notes</a></li>
+                <li><a href="#contact" class="text-label" data-section-link="contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section: Editorial Asymmetry -->
-    <section class="hero" id="about">
-        <div class="editorial-grid">
-            <div class="hero-text-block">
-                <span class="eyebrow text-label">Portfolio & Research</span>
-                <h1 class="display-lg"><b>Kaloyan Tsvetkov</b><br> <span class="italic-accent">Master's student</span> <br> and Doctoral Researcher.</h1>
-                <p class="body-lg">Hello. I’m <b>Kaloyan Tsvetkov</b>. As a Doctoral Researcher at INSAIT, I am working on performativity in machine learning and concurrently pursuing my Master's Degree in Computational Linguistics at FMI, Sofia University.</p>
-                <div class="cta-group">
-                    <a href="#experience" class="btn btn-primary">See Experience</a>
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    <main class="portfolio-shell">
+        <aside class="portrait-region" aria-label="Portrait">
+            <div class="hero-visual"><div class="image-frame"><img src="src/images/profile_work.webp" alt="me" fetchpriority="high" loading="eager"></div></div>
+        </aside>
+
+        <div class="orb-region">
+            <canvas id="orb-canvas" aria-hidden="true"></canvas>
+            <div class="orb-node-layer">
+                <button class="orb-node is-active" type="button" data-orb-section="about" aria-label="About" aria-pressed="true"><svg class="orb-node-icon" data-icon="person" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="3"></circle><path d="M5.5 20c.5-4 2.7-6 6.5-6s6 2 6.5 6"></path></svg><span>About</span></button>
+                <button class="orb-node" type="button" data-orb-section="experience" aria-label="Experience" aria-pressed="false"><svg class="orb-node-icon" data-icon="briefcase" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"></rect><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7M3 12h18M10 12v2h4v-2"></path></svg><span>Experience</span></button>
+                <button class="orb-node" type="button" data-orb-section="publications" aria-label="Publications" aria-pressed="false"><svg class="orb-node-icon" data-icon="file-text" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"></path></svg><span>Publications</span></button>
+                <button class="orb-node" type="button" data-orb-section="notes" aria-label="Notes" aria-pressed="false"><svg class="orb-node-icon" data-icon="book" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5c3.5-1 6-.2 8.5 2v13c-2.5-2.2-5-3-8.5-2zM20.5 5.5c-3.5-1-6-.2-8.5 2v13c2.5-2.2 5-3 8.5-2z"></path></svg><span>Notes</span></button>
+                <button class="orb-node" type="button" data-orb-section="contact" aria-label="Contact" aria-pressed="false"><svg class="orb-node-icon" data-icon="mail" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg><span>Contact</span></button>
+            </div>
+        </div>
+
+        <div class="section-stage" aria-live="polite">
+            <section class="content-section hero is-active" id="about" data-section="about">
+                <div class="editorial-grid"><div class="hero-text-block">
+                    <span class="eyebrow text-label">Portfolio & Research</span>
+                    <h1 class="display-lg"><b>Kaloyan Tsvetkov</b><br> <span class="italic-accent">Master's student</span> <br> and Doctoral Researcher.</h1>
+                    <p class="body-lg">Hello. I’m <b>Kaloyan Tsvetkov</b>. As a Doctoral Researcher at INSAIT, I am working on performativity in machine learning and concurrently pursuing my Master's Degree in Computational Linguistics at FMI, Sofia University.</p>
+                    <div class="cta-group"><a href="#experience" class="btn btn-primary" data-section-link="experience">See Experience</a><a href="#contact" class="btn btn-secondary" data-section-link="contact">Get in Touch</a></div>
+                </div></div>
+            </section>
+
+            <section id="experience" class="content-section section-spacer bg-surface-low" data-section="experience" hidden>
+                <div class="editorial-grid">
+                    <div class="section-header full-row"><h2 class="headline-md"><span class="eyebrow-inline text-label">02 / Experience</span> Selected Roles</h2></div>
+                    <div class="cards-grid">
+                        <article class="card"><div class="card-header"><span class="chip">Research</span><span class="date text-label">Sep 2025 - Present</span></div><h3 class="title-lg">Ph.D. Student <span class="italic-accent">@</span> INSAIT</h3><p class="body-md text-muted">Focusing on AI Safety, LRM Scheming, and Theoretical Foundations.</p></article>
+                        <article class="card"><div class="card-header"><span class="chip">Teaching</span><span class="date text-label">2022 - 2025</span></div><h3 class="title-lg">Teaching Assistant <span class="italic-accent">@</span> FMI</h3><p class="body-md text-muted">Conducting tutorials and mentoring undergraduate students in core CS subjects.</p></article>
+                        <article class="card"><div class="card-header"><span class="chip">Internship</span><span class="date text-label">Mar 2025 - Jun 2025</span></div><h3 class="title-lg">Research Intern <span class="italic-accent">@</span> INSAIT</h3><p class="body-md text-muted">Early research into AI alignment theories.</p></article>
+                        <article class="card"><div class="card-header"><span class="chip">Engineering</span><span class="date text-label">Jul 2024 - Nov 2024</span></div><h3 class="title-lg">Full-Stack Intern <span class="italic-accent">@</span> Astea</h3><p class="body-md text-muted">Developed a complex web-based team project utilizing modern stack technologies.</p></article>
+                        <article class="card"><div class="card-header"><span class="chip">Hackathon</span><span class="date text-label">2023 & 2024</span></div><h3 class="title-lg">FMI Codes Winner</h3><p class="body-md text-muted">Achieved First Place (2024) and Second Place (2023) in the 48-hour university hackathon.</p></article>
+                        <article class="card"><div class="card-header"><span class="chip">Olympiad</span><span class="date text-label">2017 - 2021</span></div><h3 class="title-lg">National Math Olympiad</h3><p class="body-md text-muted">Silver Medalist (2024) and 2x Bronze Medalist (2023, 2025).</p></article>
+                    </div>
                 </div>
-            </div>
-            <!-- Image offset for asymmetry -->
-            <div class="hero-visual">
-                <div class="image-frame">
-                <img src="src/images/profile_work.webp" alt="me" fetchpriority="high" loading="eager">
+            </section>
+
+            <section id="publications" class="content-section section-spacer" data-section="publications" hidden>
+                <div class="editorial-grid">
+                    <div class="section-header full-row"><h2 class="headline-md"><span class="eyebrow-inline text-label">03 / Research</span> Publications</h2></div>
+                    <div class="cards-grid cards-grid-single"><article class="card publication-card">
+                        <div class="card-header"><span class="chip">Conference</span><span class="date text-label">2025</span></div>
+                        <h3 class="title-lg"><a href="#" target="_blank" rel="noopener noreferrer">The Open Proof Corpus: A Large-Scale Study of LLM-Generated Mathematical Proofs</a></h3>
+                        <p class="body-md text-muted"><b>Authors:</b>Jasper Dekoninck, Ivo Petrov, Kristian Minchev, Mislav Balunovic, Martin Vechev, Miroslav Marinov, Maria Drencheva, Lyuba Konova, Milen Shumanov, <b>Kaloyan Tsvetkov</b>, Nikolay Drenchev, Lazar Todorov, Kalina Nikolova, Nikolay Georgiev, Vanesa Kalinkova, Margulan Ismoldayev</p>
+                        <p class="body-sm text-muted italic-accent">Published in: ICLR 2026</p>
+                    </article></div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="section-spacer bg-surface-low">
-        <div class="editorial-grid">
-            <div class="section-header full-row">
-                <h2 class="headline-md"><span class="eyebrow-inline text-label">02 / Experience</span> Selected Roles</h2>
-            </div>
-            
-            <div class="cards-grid">
-                <!-- Card 1 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Research</span>
-                        <span class="date text-label">Sep 2025 - Present</span>
+            <section id="notes" class="content-section section-spacer bg-surface-low" data-section="notes" hidden>
+                <div class="editorial-grid">
+                    <div class="section-header full-row"><h2 class="headline-md"><span class="eyebrow-inline text-label">04 / Library</span> Teaching Notes</h2></div>
+                    <div class="cards-grid cards-grid-single notes-list">
+                        <article class="card"><h3 class="title-lg">Discrete Mathematics</h3><a href="./src/documents/DS_notes.pdf" target="_blank" rel="noopener noreferrer" class="text-label date">PDF / Open Access</a></article>
+                        <article class="card"><h3 class="title-lg">Design & Analysis of Algorithms</h3><a href="./src/documents/DAA_notes.pdf" target="_blank" rel="noopener noreferrer" class="text-label date">PDF / Open Access</a></article>
+                        <article class="card"><h3 class="title-lg">Algebra</h3><a href="./src/documents/Algebra_notes.pdf" target="_blank" rel="noopener noreferrer" class="text-label date">PDF / Open Access</a></article>
                     </div>
-                    <h3 class="title-lg">Ph.D. Student <span class="italic-accent">@</span> INSAIT</h3>
-                    <p class="body-md text-muted">Focusing on AI Safety, LRM Scheming, and Theoretical Foundations.</p>
-                </article>
-
-                <!-- Card 2 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Teaching</span>
-                        <span class="date text-label">2022 - 2025</span>
-                    </div>
-                    <h3 class="title-lg">Teaching Assistant <span class="italic-accent">@</span> FMI</h3>
-                    <p class="body-md text-muted">Conducting tutorials and mentoring undergraduate students in core CS subjects.</p>
-                </article>
-
-                <!-- Card 3 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Internship</span>
-                        <span class="date text-label">Mar 2025 - Jun 2025</span>
-                    </div>
-                    <h3 class="title-lg">Research Intern <span class="italic-accent">@</span> INSAIT</h3>
-                    <p class="body-md text-muted">Early research into AI alignment theories.</p>
-                </article>
-
-                <!-- Card 4 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Engineering</span>
-                        <span class="date text-label">Jul 2024 - Nov 2024</span>
-                    </div>
-                    <h3 class="title-lg">Full-Stack Intern <span class="italic-accent">@</span> Astea</h3>
-                    <p class="body-md text-muted">Developed a complex web-based team project utilizing modern stack technologies.</p>
-                </article>
-
-                <!-- Card 5 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Hackathon</span>
-                        <span class="date text-label">2023 & 2024</span>
-                    </div>
-                    <h3 class="title-lg">FMI Codes Winner</h3>
-                    <p class="body-md text-muted">Achieved First Place (2024) and Second Place (2023) in the 48-hour university hackathon.</p>
-                </article>
-
-                <!-- Card 6 -->
-                <article class="card">
-                    <div class="card-header">
-                        <span class="chip">Olympiad</span>
-                        <span class="date text-label">2017 - 2021</span>
-                    </div>
-                    <h3 class="title-lg">National Math Olympiad</h3>
-                    <p class="body-md text-muted">Silver Medalist (2024) and 2x Bronze Medalist (2023, 2025).</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Publications Section -->
-    <section id="publications" class="section-spacer">
-        <div class="editorial-grid">
-            <div class="section-header full-row">
-                <h2 class="headline-md"><span class="eyebrow-inline text-label">03 / Research</span> Publications</h2>
-            </div>
-            
-            <div class="cards-grid cards-grid-single">
-                <article class="card publication-card">
-                    <div class="card-header">
-                        <span class="chip">Conference</span>
-                        <span class="date text-label">2025</span>
-                    </div>
-                    <h3 class="title-lg"><a href="#" target="_blank">The Open Proof Corpus: A Large-Scale Study of LLM-Generated Mathematical Proofs</a></h3>
-                    <p class="body-md text-muted"><b>Authors:</b>Jasper Dekoninck, Ivo Petrov, Kristian Minchev, Mislav Balunovic, Martin Vechev, Miroslav Marinov, Maria Drencheva, Lyuba Konova, Milen Shumanov, <b>Kaloyan Tsvetkov</b>, Nikolay Drenchev, Lazar Todorov, Kalina Nikolova, Nikolay Georgiev, Vanesa Kalinkova, Margulan Ismoldayev</p>
-                    <p class="body-sm text-muted italic-accent">Published in: ICLR 2026</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notes Section -->
-    <section id="notes" class="section-spacer bg-surface-low">
-        <div class="editorial-grid">
-            <div class="section-header full-row">
-                <h2 class="headline-md"><span class="eyebrow-inline text-label">04 / Library</span> Teaching Notes</h2>
-            </div>
-            
-            <div class="cards-grid cards-grid-single">
-                <article class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
-                    <h3 class="title-lg">Discrete Mathematics</h3>
-                    <a href="./src/documents/DS_notes.pdf" target="_blank" class="text-label date">PDF / Open Access</a>
-                </article>
-                <article class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
-                    <h3 class="title-lg">Design & Analysis of Algorithms</h3>
-                    <a href="./src/documents/DAA_notes.pdf" target="_blank" class="text-label date">PDF / Open Access</a>
-                </article>
-                <article class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
-                    <h3 class="title-lg">Algebra</h3>
-                    <a href="./src/documents/Algebra_notes.pdf" target="_blank" class="text-label date">PDF / Open Access</a>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section-spacer">
-        <div class="editorial-grid">
-            <div class="section-header full-row">
-                <h2 class="headline-md"><span class="eyebrow-inline text-label">05 / Contact</span> Main Line.</h2>
-            </div>
-
-            <div class="contact-main col-offset-2">
-                <a href="mailto:kaloyan.tsvetkov@insait.ai" class="email-display display-lg">
-                    kaloyan.tsvetkov<span class="italic-accent">@</span> insait.ai
-                </a>
-                
-                <p class="body-lg text-muted" style="margin-top: var(--spacing-md);">Reach out for research collaborations, academic inquiries or general discussions.</p>
-
-                <div class="social-links">
-                    <a href="https://github.com/KaloyanTs" class="social-text text-label">GitHub</a>
-                    <a href="https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/" class="social-text text-label">LinkedIn</a>
-                    <a href="https://www.instagram.com/kaloyants_gotin_sym/" class="social-text text-label">Instagram</a>
-                    <a href="https://www.facebook.com/profile.php?id=100024007178107" class="social-text text-label">Facebook</a>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <footer>
-        <div class="editorial-grid">
-            <div style="grid-column: 1 / -1; width: 100%; text-align: center;">
-                <p class="text-label text-muted" style="margin-bottom: 8px;">&copy; 2025 <b>Kaloyan Tsvetkov</b>. All rights reserved.</p>
-                <span class="gem-launcher" onclick="openTowerGame(this)" style="cursor: pointer; display: inline-block; width: 18px; height: 18px; touch-action: manipulation;" title="Play Tower Bloxx">
-                    <img src="./src/images/diamong.svg" alt="Play" style="width: 100%; height: 100%; filter: grayscale(100%);">
-                </span>
-            </div>
+            <section id="contact" class="content-section section-spacer" data-section="contact" hidden>
+                <div class="editorial-grid">
+                    <div class="section-header full-row"><h2 class="headline-md"><span class="eyebrow-inline text-label">05 / Contact</span> Main Line.</h2></div>
+                    <div class="contact-main col-offset-2">
+                        <a href="mailto:kaloyan.tsvetkov@insait.ai" class="email-display display-lg">kaloyan.tsvetkov<span class="italic-accent">@</span> insait.ai</a>
+                        <p class="body-lg text-muted">Reach out for research collaborations, academic inquiries or general discussions.</p>
+                        <div class="social-links"><a href="https://github.com/KaloyanTs" class="social-text text-label">GitHub</a><a href="https://www.linkedin.com/in/kaloyan-tsvetkov-40416a247/" class="social-text text-label">LinkedIn</a><a href="https://www.instagram.com/kaloyants_gotin_sym/" class="social-text text-label">Instagram</a><a href="https://www.facebook.com/profile.php?id=100024007178107" class="social-text text-label">Facebook</a></div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </footer>
+    </main>
 
-    <!-- Full-screen Game Modal -->
+    <footer><div class="editorial-grid"><div class="footer-content">
+        <p class="text-label text-muted">&copy; 2026 <b>Kaloyan Tsvetkov</b>. All rights reserved.</p>
+        <span class="gem-launcher" onclick="openTowerGame(this)" title="Play Tower Bloxx"><img src="./src/images/diamong.svg" alt="Play"></span>
+    </div></div></footer>
+
     <div id="tower-bloxx-modal" class="hidden">
-        <div class="modal-header" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 10000; display: block; padding: 0; margin: 0; height: 0;">
-            <button class="restart-btn" onclick="resetGame()" style="position: absolute; top: 15px; right: 60px; z-index: 1000; background: none; border: none; color: white; font-size: 28px; cursor: pointer; text-shadow: 2px 2px 0px #000;" title="Start Over">↻</button>
-            <button class="close-btn" onclick="closeTowerGame()" style="position: absolute; top: 15px; right: 20px; z-index: 1000; background: none; border: none; color: white; font-size: 38px; font-weight: bold; line-height: 28px; cursor: pointer; text-shadow: 2px 2px 0px #000;" title="Close">&times;</button>
-        </div>
-        <div id="tower-game-container" style="position: relative; width: 100%; height: 100%; overflow: hidden; background: skyblue;">
-            <!-- Canvas gets appended here by Matter.js -->
-            
-            <!-- Game HUD -->
-            <div id="game-hud" class="hidden">
-                <div class="hud-score">Population: <span id="hud-score-value">0</span></div>
-                <div class="hud-level">Level: <span id="hud-level-value">1</span></div>
-            </div>
-
-            <!-- Liquid Combo Timer & Label -->
-            <div id="combo-timer-container" class="hidden">
-                <div id="combo-timer-bar-wrapper">
-                    <div id="combo-timer-bar"></div>
-                </div>
-                <div id="combo-side-label"><span id="hud-combo-value">x1</span></div>
-            </div>
-
-            <!-- Tower Completed Screen -->
-            <div id="game-state-completed" class="game-overlay hidden">
-                <button class="close-popup-btn" onclick="hideCompletedPopup()" title="Close to view tower">&times;</button>
-                <h2 class="title-lg" style="margin-top: 0;">Tower Completed!</h2>
-                <div class="score-summary">Bonus: <span id="tower-bonus">+500</span></div>
-                <button class="btn btn-primary" onclick="nextTower()" style="margin-top: 15px; padding: 0.5rem 1rem; font-size: 0.85rem;">Build Next</button>
-            </div>
-
-            <!-- Notifications / Effects Container -->
-            <div id="effects-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50;"></div>
+        <div class="modal-header"><button class="restart-btn" onclick="resetGame()" title="Start Over">↻</button><button class="close-btn" onclick="closeTowerGame()" title="Close">&times;</button></div>
+        <div id="tower-game-container">
+            <div id="game-hud" class="hidden"><div class="hud-score">Population: <span id="hud-score-value">0</span></div><div class="hud-level">Level: <span id="hud-level-value">1</span></div></div>
+            <div id="combo-timer-container" class="hidden"><div id="combo-timer-bar-wrapper"><div id="combo-timer-bar"></div></div><div id="combo-side-label"><span id="hud-combo-value">x1</span></div></div>
+            <div id="game-state-completed" class="game-overlay hidden"><button class="close-popup-btn" onclick="hideCompletedPopup()" title="Close to view tower">&times;</button><h2 class="title-lg">Tower Completed!</h2><div class="score-summary">Bonus: <span id="tower-bonus">+500</span></div><button class="btn btn-primary" onclick="nextTower()">Build Next</button></div>
+            <div id="effects-container"></div>
         </div>
     </div>
 
-    <script src="script/main.js" defer></script>
-    <script src="script/doodles.js" defer></script>
-    <script src="script/matter.min.js" defer></script>
-    <script src="script/tower_bloxx_pure.js" defer></script>
+    <script src="script/contsnts.js" defer></script>
+    <script src="script/portfolio.js" defer></script>
 </body>
 </html>

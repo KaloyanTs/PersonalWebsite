@@ -1,0 +1,9 @@
+node_modules/
+test-results/
+playwright-report/
+debug.log
+.chrome-lighthouse/
+.lighthouse-tmp/
+
+*.js*
+tests/

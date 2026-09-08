@@ -1,363 +1,69 @@
-:root {
-    /* Hard overrides for sketch MS Paint Look */
-    --surface: #ffffff !important;
-    --surface-container-low: #ffffff !important;
-    --surface-container-high: #ffffff !important;
-    --surface-bright: #ffffff !important;
-    --surface-container-lowest: #ffffff !important;
-    --surface-container-highest: #ffffff !important;
-
-    /* Primary / Accents */
-    --primary: #000000 !important;
-    --primary-container: #ffffff !important;
-    --on-primary-fixed: #ffffff !important;
-    --primary-fixed-dim: #000000 !important;
-
-    /* Secondary / Utility */
-    --secondary-container: #ffffff !important;
-    --on-secondary-container: #000000 !important;
-    --outline-variant: #000000 !important;
-
-    /* Text */
-    --on-surface: #000000 !important;
-    --on-surface-variant: #000000 !important;
-    
-    /* Hard solid shadows */
-    --shadow-ambient: 4px 4px 0px #000000 !important;
-    --glass-blur: none !important;
-}
-
-/* Force everything to look typed */
-* {
-    font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Marker Felt", "MS Sans Serif", sans-serif !important;
-    color: #000 !important;
-}
-
-body {
-    background-color: #fff !important;
-    background-image: none !important;
-}
-
-/* Base wobbly borders */
-.glass-nav, .card, .btn, .chip, .hero-visual img, .image-frame {
-    border: solid 2px #000 !important;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
-    box-shadow: 4px 4px 0px #000 !important;
-    background: #fff !important;
-    backdrop-filter: none !important;
-    transition: none !important;
-}
-
-/* Buttons */
-.btn-primary {
-    background: #000 !important;
-    color: #fff !important;
-    border: solid 3px #000 !important;
-    border-radius: 15px 225px 15px 255px/255px 15px 225px 15px !important;
-}
-
-.btn-primary:hover {
-    box-shadow: 6px 6px 0px #000 !important;
-    transform: translate(-2px, -2px) !important;
-    background: #222 !important;
-}
-
-.btn-secondary {
-    border-width: 2px 4px 3px 2px !important;
-}
-
-.btn-secondary:hover {
-    box-shadow: 6px 6px 0px #000 !important;
-    transform: translate(-2px, -2px) !important;
-}
-
-/* Cards */
-.card {
-    border-width: 3px 2px 4px 2px !important;
-    position: relative !important;
-    overflow: visible !important;
-}
-
-.card-header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    margin-bottom: 12px !important;
-}
-
-.card .date {
-    position: static !important;
-    display: block !important;
-    margin-top: 5px !important;
-}
-
-.card:hover {
-    transform: translate(-2px, -2px) rotate(1deg) !important;
-    box-shadow: 7px 7px 0px #000 !important;
-}
-
-/* Base rotations removed as per user request to start untilted */
-/* .rotate-1 { transform: rotate(1deg) !important; }
-.rotate-neg1 { transform: rotate(-1deg) !important; }
-.rotate-2 { transform: rotate(2deg) !important; }
-.rotate-neg2 { transform: rotate(-2deg) !important; } */
-
-/* Modal Game Container */
+/* Existing hidden Tower Bloxx feature, kept visually isolated from the portfolio shell. */
 #tower-bloxx-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.95);
     z-index: 9999;
+    inset: 0;
     display: flex;
     flex-direction: column;
+    background: rgba(255,255,255,.96);
     pointer-events: auto;
 }
 
-#tower-bloxx-modal.hidden {
-    display: none !important;
-}
+#tower-bloxx-modal.hidden, .game-overlay.hidden, #game-hud.hidden,
+#combo-timer-container.hidden { display: none !important; }
 
-.modal-header {
-    /* Styles are handled inline for position absolute overlay */
-}
-
-.sticky-launch-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-/* Make images look bad / drawn */
-img {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-img:hover {
-    transform: scale(1.05) !important;
-    z-index: 10 !important;
-}
-
-/* Accents */
-.italic-accent {
-    font-style: italic !important;
-    text-decoration: underline !important;
-}
-
-/* Misc overrides to ensure MS Paint feel */
-.bg-surface-low, .hero {
-    background: transparent !important;
-}
-
-.section-spacer {
-    border-top: 2px dashed #000 !important;
-}
-
-.chip {
-    padding: 0.2rem 0.6rem;
-    border: 2px solid #000 !important;
-    border-radius: 10px 225px 15px 255px/255px 15px 225px 10px !important;
-}
-
-/* Doodle Canvas */
-#doodle-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-    background: transparent;
-}
-
-/* Game Overlays and HUD */
-#game-hud {
+.modal-header { position: absolute; z-index: 10000; inset: 0 0 auto; height: 0; }
+.restart-btn, .close-btn {
     position: absolute;
-    top: 20px;
-    left: 20px;
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-weight: bold;
-    font-size: 1.2rem;
-    pointer-events: none;
+    top: 15px;
+    padding: 0;
+    color: white;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-shadow: 2px 2px 0 #000;
 }
+.restart-btn { right: 60px; font-size: 28px; }
+.close-btn { right: 20px; font-size: 38px; font-weight: bold; line-height: 28px; }
 
-.hud-score, .hud-combo, .hud-level {
-    background: #fff;
-    border: 2px solid #000;
-    padding: 5px 15px;
-    border-radius: 10px 20px 10px 20px / 20px 10px 20px 10px;
-    box-shadow: 2px 2px 0px #000;
-}
+#tower-game-container { position: relative; width: 100%; height: 100%; overflow: hidden; background: skyblue; }
+#game-hud { position: absolute; z-index: 1000; top: 20px; left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 1.2rem; font-weight: bold; pointer-events: none; }
+.hud-score, .hud-level { padding: 5px 15px; background: #fff; border: 2px solid #000; border-radius: 10px 20px / 20px 10px; box-shadow: 2px 2px 0 #000; }
 
 .game-overlay {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    position: absolute;
     z-index: 1500;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
+    top: 50%; left: 50%;
     width: 250px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    padding: 20px;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    background: rgba(255,255,255,.95);
     border: 2px solid #000;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
 }
+.game-overlay .title-lg { margin-top: 0; }
+.game-overlay .btn { margin-top: 15px; padding: .5rem 1rem; font-size: .85rem; }
+.close-popup-btn { position: absolute; top: 5px; right: 10px; color: #333; background: none; border: 0; font-size: 24px; cursor: pointer; }
+#effects-container { position: absolute; z-index: 1200; inset: 0; pointer-events: none; }
 
-.close-popup-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-    line-height: 1;
-}
+#combo-timer-container { position: absolute; z-index: 1000; top: 50%; left: 20px; display: flex; align-items: center; gap: 15px; transform: translateY(-50%); }
+#combo-timer-bar-wrapper { width: 25px; height: 300px; display: flex; align-items: flex-end; overflow: hidden; background: rgba(255,255,255,.5); border: 3px solid #000; border-radius: 12px; box-shadow: 4px 4px 0 #000; }
+#combo-timer-bar { width: 100%; height: 100%; transform-origin: bottom; background: repeating-linear-gradient(45deg,#f1c40f,#f1c40f 10px,#f39c12 10px,#f39c12 20px); background-size: 28px 28px; }
+#combo-side-label { color: #fff; font-size: 20px; font-weight: bold; line-height: 1.5; text-shadow: 2px 2px 0 #000; }
+#hud-combo-value { color: #f1c40f; font-size: 24px; }
 
-.close-popup-btn:hover {
-    color: #e74c3c;
-}
+.floating-text { position: absolute; color: #fff; font-size: 1.5rem; font-weight: bold; text-shadow: 2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000; animation: float-up 1s ease-out forwards; }
+.perfect-text { color: #f1c40f; font-size: 2rem; }
+.great-text { color: #2ecc71; }
+.good-text { color: #3498db; }
+.bad-text { color: #e74c3c; font-size: 1.2rem; }
+.sparkle { position: absolute; width: 20px; height: 20px; background: url('../src/images/sparkle.svg') center/cover; animation: sparkle-out .5s ease-out forwards; }
+.combo-bump { display: inline-block; animation: combo-bump .3s ease-out; }
+.diamond-transition { position: fixed; z-index: 99999; pointer-events: none; transform-origin: center; transition: transform .6s cubic-bezier(.8,0,.2,1); }
 
-.game-overlay.hidden, #game-hud.hidden {
-    display: none !important;
-}
-
-/* Floating Effects */
-#effects-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1200;
-}
-
-.floating-text {
-    position: absolute;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #fff !important;
-    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-    animation: floatUp 1s ease-out forwards;
-}
-
-.perfect-text { color: #f1c40f !important; font-size: 2rem; }
-.great-text { color: #2ecc71 !important; }
-.good-text { color: #3498db !important; }
-.bad-text { color: #e74c3c !important; font-size: 1.2rem; }
-
-@keyframes floatUp {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-    20% { transform: translate(-50%, -100%) scale(1.2); opacity: 1; }
-    100% { transform: translate(-50%, -200%) scale(1); opacity: 0; }
-}
-
-/* Sparkles and particles */
-.sparkle {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-image: url('../src/images/sparkle.svg');
-    background-size: cover;
-    animation: sparkleAnim 0.5s ease-out forwards;
-}
-
-@keyframes sparkleAnim {
-    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.5) rotate(180deg); opacity: 0; }
-}
-
-/* Liquid Combo Timer & Label */
-#combo-timer-container {
-    position: absolute;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 1000;
-}
-
-#combo-timer-bar-wrapper {
-    width: 25px;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.5);
-    border: 3px solid #000;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 4px 4px 0px #000;
-    display: flex;
-    align-items: flex-end;
-}
-
-#combo-timer-bar {
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        45deg,
-        #f1c40f,
-        #f1c40f 10px,
-        #f39c12 10px,
-        #f39c12 20px
-    );
-    background-size: 28px 28px;
-    animation: liquidFlow 1s linear infinite;
-    transform-origin: bottom;
-    transition: height 0.1s linear, background-color 0.3s;
-}
-
-#combo-side-label {
-    font-family: inherit;
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 2px 2px 0px #000;
-    line-height: 1.5;
-}
-
-#hud-combo-value {
-    color: #f1c40f;
-    font-size: 24px;
-}
-
-@keyframes liquidFlow {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 28px; }
-}
-
-#combo-timer-container.hidden {
-    display: none !important;
-}
-
-/* Combo Bump Animation */
-.combo-bump {
-    display: inline-block;
-    animation: comboBumpAnim 0.3s ease-out;
-}
-
-@keyframes comboBumpAnim {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.5); color: #f1c40f; }
-    100% { transform: scale(1); }
-}
-
-/* Diamond Zoom Transition */
-.diamond-transition {
-    position: fixed;
-    z-index: 99999;
-    transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
-    transform-origin: center center;
-    pointer-events: none;
-}
+@keyframes float-up { from { transform: translate(-50%,-50%) scale(.5); opacity: 1; } to { transform: translate(-50%,-200%) scale(1); opacity: 0; } }
+@keyframes sparkle-out { from { transform: translate(-50%,-50%) scale(0); opacity: 1; } to { transform: translate(-50%,-50%) scale(1.5) rotate(180deg); opacity: 0; } }
+@keyframes combo-bump { 50% { transform: scale(1.5); color: #f1c40f; } }
